@@ -346,7 +346,7 @@ router.post('/:id/unenroll', auth, async (req, res) => {
     }
 
     course.students = course.students.filter(
-      studentId => studentId.toString() !== studentToUnenroll
+      studentId => studentId.toString() !== studentToUnenroll.toString()
     );
     await course.save();
 
