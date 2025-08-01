@@ -1,0 +1,26 @@
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:23:14.790Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:23:14.809Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:23:31.170Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:23:31.186Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /","service":"secure-lms","timestamp":"2025-08-01T03:47:48.591Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /favicon.ico","service":"secure-lms","timestamp":"2025-08-01T03:47:48.642Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:49:29.210Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:49:29.229Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:49:41.379Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:49:41.396Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:51:10.374Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:51:10.391Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:52:30.497Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:52:30.515Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:52:41.084Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:52:41.114Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:53:39.674Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:53:39.700Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:54:00.308Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:54:00.331Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T03:57:11.367Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T03:57:11.390Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-01T05:47:11.037Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/logout","service":"secure-lms","timestamp":"2025-08-01T05:47:23.140Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-01T05:47:35.217Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-01T05:47:43.413Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
