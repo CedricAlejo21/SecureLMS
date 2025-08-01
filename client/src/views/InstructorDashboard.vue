@@ -130,7 +130,7 @@
                       <p class="text-sm text-gray-500">{{ assignment.course?.title }}</p>
                       <p class="text-xs text-gray-400 mt-1">Due: {{ new Date(assignment.dueDate).toLocaleDateString() }}</p>
                     </div>
-                    <span class="text-xs text-gray-500">{{ assignment.submissions || 0 }} submissions</span>
+                    <span class="text-xs text-gray-500">{{ (assignment.submissions?.length || 0) }} submissions</span>
                   </div>
                 </div>
               </div>
@@ -183,6 +183,10 @@ import axios from 'axios'
 
 const authStore = useAuthStore()
 const loading = ref(false)
+
+// API base URL
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
 const stats = ref({
   totalCourses: 0,
   totalStudents: 0,
@@ -196,15 +200,30 @@ const fetchDashboardData = async () => {
   try {
     loading.value = true
     
+    console.log('=== INSTRUCTOR DASHBOARD DEBUG ===')
+    console.log('Auth store user:', authStore.user)
+    console.log('Auth store token:', authStore.token ? 'Present' : 'Missing')
+    console.log('User role:', authStore.user?.role)
+    console.log('User ID:', authStore.user?.userId || authStore.user?.id || authStore.user?._id)
+    console.log('API Base URL:', API_BASE)
+    
     // Fetch courses, assignments, and other data
     const [coursesResponse, assignmentsResponse] = await Promise.all([
-      axios.get('/courses', {
+      axios.get(`${API_BASE}/courses`, {
         headers: { Authorization: `Bearer ${authStore.token}` }
       }),
-      axios.get('/assignments', {
+      axios.get(`${API_BASE}/assignments`, {
         headers: { Authorization: `Bearer ${authStore.token}` }
       })
     ])
+
+    console.log('=== API RESPONSES ===')
+    console.log('Courses response status:', coursesResponse.status)
+    console.log('Courses response data:', coursesResponse.data)
+    console.log('Number of courses returned:', coursesResponse.data?.length || 0)
+    console.log('Assignments response status:', assignmentsResponse.status)
+    console.log('Assignments response data:', assignmentsResponse.data)
+    console.log('Number of assignments returned:', assignmentsResponse.data?.length || 0)
 
     courses.value = coursesResponse.data || []
     assignments.value = assignmentsResponse.data || []
@@ -215,8 +234,18 @@ const fetchDashboardData = async () => {
     stats.value.totalStudents = courses.value.reduce((total, course) => total + (course.students?.length || 0), 0)
     stats.value.pendingReviews = assignments.value.filter(a => a.needsReview).length || 0
     
+    console.log('=== CALCULATED STATS ===')
+    console.log('Final stats:', stats.value)
+    console.log('Final courses array:', courses.value)
+    console.log('Final assignments array:', assignments.value)
+    
   } catch (error) {
-    console.error('Error fetching dashboard data:', error)
+    console.error('=== ERROR FETCHING DASHBOARD DATA ===')
+    console.error('Error object:', error)
+    console.error('Error response:', error.response?.data)
+    console.error('Error status:', error.response?.status)
+    console.error('Error headers:', error.response?.headers)
+    console.error('Request config:', error.config)
     // Set default values on error
     courses.value = []
     assignments.value = []

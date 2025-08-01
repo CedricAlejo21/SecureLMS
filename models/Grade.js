@@ -68,8 +68,8 @@ gradeSchema.index({ createdAt: -1 });
 
 // Virtual for percentage score
 gradeSchema.virtual('percentage').get(function() {
-  if (this.populated('assignment') && this.assignment.maxPoints) {
-    return Math.round((this.points / this.assignment.maxPoints) * 100);
+  if (this.populated('assignment') && this.assignment.maxScore) {
+    return Math.round((this.points / this.assignment.maxScore) * 100);
   }
   return null;
 });
@@ -143,7 +143,7 @@ gradeSchema.statics.getCourseStats = async function(courseId) {
 // Static method to get student's grade summary for a course
 gradeSchema.statics.getStudentCourseGrades = async function(studentId, courseId) {
   return await this.find({ student: studentId, course: courseId })
-    .populate('assignment', 'title maxPoints dueDate type')
+    .populate('assignment', 'title maxScore dueDate type')
     .sort({ createdAt: -1 });
 };
 

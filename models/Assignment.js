@@ -25,7 +25,7 @@ const assignmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: [1, 'Maximum score must be at least 1'],
-    max: [100, 'Maximum score cannot exceed 100']
+    max: [1000, 'Maximum score cannot exceed 1000']
   },
   submissions: [{
     student: {

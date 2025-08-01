@@ -12,12 +12,22 @@ const router = express.Router();
 // Get all courses (with role-based filtering)
 router.get('/', auth, async (req, res) => {
   try {
+    console.log('=== COURSES API DEBUG ===');
+    console.log('Request user:', req.user);
+    console.log('User ID:', req.user.userId);
+    console.log('User role:', req.user.role);
+    
     let query = { isActive: true };
     
     // Instructors can see their own courses
     if (req.user.role === 'instructor') {
       query['instructor'] = req.user.userId;
+      console.log('Instructor detected - filtering by instructor ID:', req.user.userId);
+    } else {
+      console.log('Non-instructor user - showing all active courses');
     }
+    
+    console.log('Database query:', query);
     
     // Students and admins can see all active courses
     // Frontend will handle filtering for enrolled vs available courses
@@ -27,6 +37,20 @@ router.get('/', auth, async (req, res) => {
       .populate('students', 'firstName lastName email')
       .populate('assignments', 'title dueDate maxScore')
       .sort({ startDate: -1 });
+
+    console.log('=== QUERY RESULTS ===');
+    console.log('Number of courses found:', courses.length);
+    console.log('Course details:');
+    courses.forEach((course, index) => {
+      console.log(`Course ${index + 1}:`, {
+        id: course._id,
+        title: course.title,
+        instructor: course.instructor,
+        instructorId: course.instructor._id,
+        studentsCount: course.students.length,
+        isActive: course.isActive
+      });
+    });
 
     res.json(courses);
   } catch (error) {

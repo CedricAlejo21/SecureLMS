@@ -228,7 +228,7 @@ const fetchUpcomingAssignments = async () => {
 // Fetch student statistics
 const fetchStats = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/students/stats`, {
+    const response = await axios.get(`${API_BASE}/users/students/stats`, {
       headers: {
         'Authorization': `Bearer ${authStore.token}`
       }
@@ -236,6 +236,10 @@ const fetchStats = async () => {
     const data = response.data
     stats.completedAssignments = data.completedAssignments || 0
     stats.averageGrade = data.averageGrade || 0
+    stats.pendingAssignments = data.pendingAssignments || 0
+    stats.enrolledCourses = data.enrolledCourses || 0
+    
+    console.log('Dashboard stats received:', data)
   } catch (error) {
     console.error('Error fetching stats:', error)
   }

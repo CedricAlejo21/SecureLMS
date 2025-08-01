@@ -56,8 +56,8 @@
                 <p class="mt-1 text-sm text-gray-900">{{ formatDate(assignment.dueDate) }}</p>
               </div>
               <div>
-                <h3 class="text-sm font-medium text-gray-500">Max Points</h3>
-                <p class="mt-1 text-sm text-gray-900">{{ assignment.maxPoints }}</p>
+                <h3 class="text-sm font-medium text-gray-500">Max Score</h3>
+                <p class="mt-1 text-sm text-gray-900">{{ assignment.maxScore }}</p>
               </div>
               <div>
                 <h3 class="text-sm font-medium text-gray-500">Created</h3>
@@ -125,7 +125,7 @@
                       Submitted on {{ formatDate(studentSubmission.submittedAt) }}
                     </p>
                     <p class="text-sm text-blue-700" v-if="studentSubmission.grade">
-                      Grade: {{ studentSubmission.grade }}/{{ assignment.maxPoints }}
+                      Grade: {{ studentSubmission.grade }}/{{ assignment.maxScore }}
                     </p>
                   </div>
                 </div>
@@ -204,8 +204,11 @@ const submitting = ref(false)
 // Computed
 const canEdit = computed(() => {
   if (!assignment.value) return false
+  const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+  const instructorId = assignment.value.course?.instructor?._id || assignment.value.course?.instructor;
+  
   return authStore.user?.role === 'admin' || 
-         (authStore.user?.role === 'instructor' && assignment.value.course?.instructor === authStore.user?.id)
+         (authStore.user?.role === 'instructor' && userId?.toString() === instructorId?.toString())
 })
 
 const canDelete = computed(() => {
@@ -229,28 +232,49 @@ const messageClass = computed(() => {
 // Methods
 const formatDate = (dateString) => {
   if (!dateString) return ''
-  return new Date(dateString).toLocaleString()
+  return new Date(dateString).toLocaleDateString()
 }
 
 const fetchAssignment = async () => {
   try {
+    console.log('=== ASSIGNMENT DETAIL FETCH DEBUG ===');
+    console.log('Assignment ID:', route.params.id);
+    console.log('User:', authStore.user);
+    
     loading.value = true
     const response = await fetch(`/api/assignments/${route.params.id}`, {
       headers: { 'Authorization': `Bearer ${authStore.token}` }
     })
     
+    console.log('Assignment fetch response status:', response.status);
+    
     if (response.ok) {
       assignment.value = await response.json()
-      const studentSubmissionResponse = await fetch(`/api/submissions/${assignment.value._id}/${authStore.user?.id}`, {
-        headers: { 'Authorization': `Bearer ${authStore.token}` }
-      })
-      if (studentSubmissionResponse.ok) {
-        studentSubmission.value = await studentSubmissionResponse.json()
+      console.log('Assignment fetched:', assignment.value);
+      
+      // Fetch student submission if user is a student
+      if (authStore.user?.role === 'student') {
+        const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+        console.log('Fetching submission for user:', userId);
+        
+        const studentSubmissionResponse = await fetch(`/api/submissions/${assignment.value._id}/${userId}`, {
+          headers: { 'Authorization': `Bearer ${authStore.token}` }
+        })
+        
+        if (studentSubmissionResponse.ok) {
+          studentSubmission.value = await studentSubmissionResponse.json()
+          console.log('Student submission:', studentSubmission.value);
+        } else {
+          console.log('No submission found or error fetching submission');
+        }
       }
     } else if (response.status === 404) {
+      console.log('Assignment not found');
       assignment.value = null
     } else {
-      showMessage('Error fetching assignment', 'error')
+      const errorData = await response.json();
+      console.error('Error response:', errorData);
+      showMessage(errorData.message || 'Error fetching assignment', 'error')
     }
   } catch (error) {
     console.error('Error fetching assignment:', error)
@@ -290,7 +314,10 @@ const deleteAssignment = async () => {
 const submitAssignment = async () => {
   submitting.value = true
   try {
-    const response = await fetch(`/api/submissions/${assignment.value._id}/${authStore.user?.id}`, {
+    const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+    console.log('Submitting assignment for user:', userId);
+    
+    const response = await fetch(`/api/submissions/${assignment.value._id}/${userId}`, {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${authStore.token}`,

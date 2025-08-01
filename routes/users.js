@@ -2,6 +2,9 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Grade = require('../models/Grade');
+const Assignment = require('../models/Assignment');
+const Course = require('../models/Course');
 const AuditLog = require('../models/AuditLog');
 const { auth } = require('../middleware/auth');
 const { authorize } = require('../middleware/roleAuth');
@@ -37,6 +40,78 @@ router.get('/profile', auth, async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error('Get profile error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get student statistics (for dashboard)
+router.get('/students/stats', auth, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    console.log('=== STUDENT STATS DEBUG ===');
+    console.log('User ID:', userId);
+    console.log('User role:', req.user.role);
+    
+    // Only students can access this endpoint for their own stats
+    if (req.user.role !== 'student') {
+      return res.status(403).json({ message: 'Access denied. Students only.' });
+    }
+    
+    // Get student's enrolled courses
+    const enrolledCourses = await Course.find({ students: userId }).countDocuments();
+    
+    // Get all assignments from enrolled courses
+    const courses = await Course.find({ students: userId });
+    const courseIds = courses.map(course => course._id);
+    
+    const totalAssignments = await Assignment.find({ 
+      course: { $in: courseIds },
+      isActive: true 
+    }).countDocuments();
+    
+    // Get student's grades
+    const grades = await Grade.find({ student: userId })
+      .populate('assignment', 'maxScore');
+    
+    console.log('Enrolled courses:', enrolledCourses);
+    console.log('Total assignments:', totalAssignments);
+    console.log('Student grades found:', grades.length);
+    
+    // Calculate statistics
+    const completedAssignments = grades.length;
+    const pendingAssignments = Math.max(0, totalAssignments - completedAssignments);
+    
+    // Calculate average grade percentage
+    let averageGrade = 0;
+    if (grades.length > 0) {
+      const totalPoints = grades.reduce((sum, grade) => sum + grade.points, 0);
+      const totalMaxPoints = grades.reduce((sum, grade) => sum + (grade.assignment?.maxScore || 0), 0);
+      averageGrade = totalMaxPoints > 0 ? Math.round((totalPoints / totalMaxPoints) * 100) : 0;
+    }
+    
+    const stats = {
+      enrolledCourses,
+      pendingAssignments,
+      completedAssignments,
+      averageGrade
+    };
+    
+    console.log('Calculated stats:', stats);
+    
+    await AuditLog.log({
+      user: userId,
+      action: 'VIEW_STUDENT_STATS',
+      resource: '/api/users/students/stats',
+      details: stats,
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent'),
+      success: true
+    });
+    
+    res.json(stats);
+  } catch (error) {
+    console.error('Get student stats error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

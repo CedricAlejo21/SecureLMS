@@ -15,15 +15,30 @@ router.get('/student/:studentId', auth, async (req, res) => {
   try {
     const { studentId } = req.params;
     
+    console.log('=== GRADES FETCH DEBUG ===');
+    console.log('Student ID from params:', studentId);
+    console.log('User ID from token:', req.user.userId);
+    console.log('User role:', req.user.role);
+    
     // Students can only view their own grades
-    if (req.user.role === 'student' && req.user.userId !== studentId) {
+    if (req.user.role === 'student' && req.user.userId.toString() !== studentId.toString()) {
+      console.log('Access denied: User ID mismatch');
       return res.status(403).json({ message: 'Access denied' });
     }
 
     const grades = await Grade.find({ student: studentId })
-      .populate('assignment', 'title maxPoints dueDate')
+      .populate('assignment', 'title maxScore dueDate')
       .populate('course', 'title')
       .sort({ createdAt: -1 });
+
+    console.log('Found grades:', grades.length);
+    console.log('Grade details:', grades.map(g => ({
+      id: g._id,
+      student: g.student,
+      assignment: g.assignment?.title,
+      points: g.points,
+      maxScore: g.maxScore
+    })));
 
     await AuditLog.log({
       user: req.user.userId,
@@ -53,13 +68,13 @@ router.get('/assignment/:assignmentId', auth, authorize('instructor', 'admin'), 
     }
 
     // Instructors can only view grades for their courses
-    if (req.user.role === 'instructor' && assignment.course.instructor.toString() !== req.user.userId) {
+    if (req.user.role === 'instructor' && assignment.course.instructor.toString() !== req.user.userId.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
     const grades = await Grade.find({ assignment: assignmentId })
       .populate('student', 'firstName lastName username')
-      .populate('assignment', 'title maxPoints')
+      .populate('assignment', 'title maxScore')
       .sort({ createdAt: -1 });
 
     await AuditLog.log({
@@ -84,20 +99,31 @@ router.get('/course/:courseId', auth, authorize('instructor', 'admin'), async (r
   try {
     const { courseId } = req.params;
     
+    console.log('=== GET COURSE GRADES DEBUG ===');
+    console.log('Course ID:', courseId);
+    console.log('User:', req.user.userId, req.user.role);
+    
     const course = await Course.findById(courseId);
     if (!course) {
+      console.log('Course not found');
       return res.status(404).json({ message: 'Course not found' });
     }
 
+    console.log('Course found:', course.title, 'Instructor:', course.instructor);
+
     // Instructors can only view grades for their courses
-    if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId) {
+    if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId.toString()) {
+      console.log('Permission denied - instructor does not own course');
       return res.status(403).json({ message: 'Access denied' });
     }
 
+    console.log('Fetching grades for course...');
     const grades = await Grade.find({ course: courseId })
       .populate('student', 'firstName lastName username')
-      .populate('assignment', 'title maxPoints')
+      .populate('assignment', 'title maxScore')
       .sort({ createdAt: -1 });
+
+    console.log('Grades found:', grades.length);
 
     await AuditLog.log({
       user: req.user.userId,
@@ -112,7 +138,8 @@ router.get('/course/:courseId', auth, authorize('instructor', 'admin'), async (r
     res.json(grades);
   } catch (error) {
     console.error('Get course grades error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ message: 'Server error', details: error.message });
   }
 });
 
@@ -155,14 +182,14 @@ router.post('/', auth, authorize('instructor', 'admin'), [
     }
 
     // Check permissions
-    if (req.user.role === 'instructor' && assignmentDoc.course.instructor.toString() !== req.user.userId) {
+    if (req.user.role === 'instructor' && assignmentDoc.course.instructor.toString() !== req.user.userId.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
-    // Validate points don't exceed assignment max points
-    if (points > assignmentDoc.maxPoints) {
+    // Validate points don't exceed assignment max score
+    if (points > assignmentDoc.maxScore) {
       return res.status(400).json({ 
-        message: `Points cannot exceed assignment maximum of ${assignmentDoc.maxPoints}` 
+        message: `Points cannot exceed assignment maximum of ${assignmentDoc.maxScore}` 
       });
     }
 
@@ -227,7 +254,7 @@ router.post('/', auth, authorize('instructor', 'admin'), [
 
     const populatedGrade = await Grade.findById(grade._id)
       .populate('student', 'firstName lastName username')
-      .populate('assignment', 'title maxPoints')
+      .populate('assignment', 'title maxScore')
       .populate('course', 'title');
 
     res.status(grade.isNew ? 201 : 200).json(populatedGrade);
@@ -255,7 +282,7 @@ router.delete('/:id', auth, authorize('instructor', 'admin'), async (req, res) =
     }
 
     // Check permissions
-    if (req.user.role === 'instructor' && grade.assignment.course.instructor.toString() !== req.user.userId) {
+    if (req.user.role === 'instructor' && grade.assignment.course.instructor.toString() !== req.user.userId.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 

@@ -57,10 +57,10 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center">
                         <span class="text-sm font-medium text-gray-900">
-                          {{ grade.points }} / {{ grade.assignment?.maxPoints }}
+                          {{ grade.points }} / {{ grade.assignment?.maxScore }}
                         </span>
                         <span class="ml-2 text-xs text-gray-500">
-                          ({{ getPercentage(grade.points, grade.assignment?.maxPoints) }}%)
+                          ({{ getPercentage(grade.points, grade.assignment?.maxScore) }}%)
                         </span>
                       </div>
                     </td>
@@ -112,7 +112,7 @@
                 <select v-model="gradeForm.assignment" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
                   <option value="">Select an assignment</option>
                   <option v-for="assignment in courseAssignments" :key="assignment._id" :value="assignment._id">
-                    {{ assignment.title }} ({{ assignment.maxPoints }} pts)
+                    {{ assignment.title }} ({{ assignment.maxScore }} pts)
                   </option>
                 </select>
               </div>
@@ -149,6 +149,66 @@
           </div>
         </div>
 
+        <!-- Edit Grade Modal -->
+        <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+            <h3 class="text-lg font-medium mb-4">Edit Grade</h3>
+            
+            <form @submit.prevent="updateGrade" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Student</label>
+                <input 
+                  :value="`${editForm.studentName}`" 
+                  disabled 
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50" 
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Assignment</label>
+                <input 
+                  :value="`${editForm.assignmentTitle} (${editForm.maxScore} pts)`" 
+                  disabled 
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50" 
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Points</label>
+                <input 
+                  v-model.number="editForm.points" 
+                  type="number" 
+                  :max="editForm.maxScore"
+                  min="0" 
+                  step="0.1"
+                  required 
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" 
+                />
+                <p class="mt-1 text-xs text-gray-500">Maximum: {{ editForm.maxScore }} points</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Feedback</label>
+                <textarea 
+                  v-model="editForm.feedback" 
+                  rows="3" 
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+                  placeholder="Optional feedback for the student..."
+                ></textarea>
+              </div>
+              
+              <div class="flex justify-end space-x-3 pt-4">
+                <button type="button" @click="closeEditModal" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                  Cancel
+                </button>
+                <button type="submit" :disabled="submitting" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
+                  {{ submitting ? 'Updating...' : 'Update Grade' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
         <div v-if="message" class="fixed top-4 right-4 max-w-sm">
           <div :class="messageClass" class="rounded-md p-4 shadow-lg">
             <p class="text-sm">{{ message }}</p>
@@ -174,6 +234,7 @@ const courseAssignments = ref([])
 const courseStudents = ref([])
 const loading = ref(true)
 const showGradeModal = ref(false)
+const showEditModal = ref(false)
 const submitting = ref(false)
 const message = ref('')
 const messageType = ref('')
@@ -183,6 +244,18 @@ const gradeForm = ref({
   assignment: '',
   student: '',
   points: 0,
+  feedback: ''
+})
+
+const editForm = ref({
+  id: '',
+  student: '',
+  studentName: '',
+  assignment: '',
+  assignmentTitle: '',
+  course: '',
+  points: 0,
+  maxScore: 0,
   feedback: ''
 })
 
@@ -216,18 +289,32 @@ const fetchGrades = async () => {
   try {
     loading.value = true
     
+    console.log('=== GRADES FETCH DEBUG ===');
+    console.log('User:', authStore.user);
+    console.log('User role:', authStore.user?.role);
+    
+    const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+    console.log('Resolved user ID:', userId);
+    
     if (isStudent.value) {
       // Students fetch their own grades
-      const response = await fetch(`/api/grades/student/${authStore.user.id}`, {
+      const response = await fetch(`/api/grades/student/${userId}`, {
         headers: { 'Authorization': `Bearer ${authStore.token}` }
       })
       
       if (response.ok) {
         grades.value = await response.json()
+        console.log('Student grades fetched:', grades.value.length);
+      } else {
+        const errorData = await response.json();
+        console.error('Error fetching student grades:', errorData);
+        showMessage(errorData.message || 'Error fetching grades', 'error')
       }
     } else {
       // Instructors/admins fetch grades for their courses
       const allGrades = []
+      
+      console.log('Fetching grades for courses:', userCourses.value.length);
       
       for (const course of userCourses.value) {
         const response = await fetch(`/api/grades/course/${course._id}`, {
@@ -236,13 +323,18 @@ const fetchGrades = async () => {
         
         if (response.ok) {
           const courseGrades = await response.json()
+          console.log(`Course ${course.title} grades:`, courseGrades.length);
           allGrades.push(...courseGrades)
+        } else {
+          console.error(`Error fetching grades for course ${course.title}`);
         }
       }
       
       grades.value = allGrades
+      console.log('Total instructor grades fetched:', grades.value.length);
     }
   } catch (error) {
+    console.error('Error in fetchGrades:', error);
     showMessage('Error fetching grades', 'error')
   } finally {
     loading.value = false
@@ -267,13 +359,31 @@ const loadCourseData = async () => {
   if (!gradeForm.value.course) return
   
   try {
+    console.log('=== LOAD COURSE DATA DEBUG ===');
+    console.log('Selected course ID:', gradeForm.value.course);
+    
     // Fetch assignments for the selected course
     const assignmentsResponse = await fetch(`/api/assignments/course/${gradeForm.value.course}`, {
       headers: { 'Authorization': `Bearer ${authStore.token}` }
     })
     
+    console.log('Assignments response status:', assignmentsResponse.status);
+    
     if (assignmentsResponse.ok) {
-      courseAssignments.value = await assignmentsResponse.json()
+      const assignments = await assignmentsResponse.json()
+      console.log('Assignments fetched:', assignments.length, assignments);
+      
+      // Ensure field name consistency - map maxPoints to maxScore if needed
+      const normalizedAssignments = assignments.map(assignment => ({
+        ...assignment,
+        maxScore: assignment.maxScore || assignment.maxPoints || 0
+      }));
+      
+      console.log('Normalized assignments:', normalizedAssignments);
+      courseAssignments.value = normalizedAssignments
+    } else {
+      const errorData = await assignmentsResponse.json()
+      console.error('Error fetching assignments:', errorData);
     }
     
     // Fetch course details to get students
@@ -281,9 +391,15 @@ const loadCourseData = async () => {
       headers: { 'Authorization': `Bearer ${authStore.token}` }
     })
     
+    console.log('Course response status:', courseResponse.status);
+    
     if (courseResponse.ok) {
       const course = await courseResponse.json()
+      console.log('Course students:', course.students?.length);
       courseStudents.value = course.students || []
+    } else {
+      const errorData = await courseResponse.json()
+      console.error('Error fetching course:', errorData);
     }
   } catch (error) {
     console.error('Error loading course data:', error)
@@ -305,6 +421,12 @@ const submitGrade = async () => {
     
     if (response.ok) {
       showMessage('Grade saved successfully!', 'success')
+      
+      // Refresh the assignment list for the selected course
+      if (gradeForm.value.course) {
+        await loadCourseData()
+      }
+      
       closeModal()
       fetchGrades()
     } else {
@@ -319,7 +441,68 @@ const submitGrade = async () => {
 }
 
 const editGrade = (grade) => {
-  showMessage('Edit functionality coming soon!', 'error')
+  console.log('=== EDIT GRADE DEBUG ===');
+  console.log('Grade to edit:', grade);
+  
+  editForm.value = {
+    id: grade._id,
+    student: grade.student._id,
+    studentName: `${grade.student.firstName} ${grade.student.lastName}`,
+    assignment: grade.assignment._id,
+    assignmentTitle: grade.assignment.title,
+    course: grade.course._id,
+    points: grade.points,
+    maxScore: grade.assignment.maxScore,
+    feedback: grade.feedback || ''
+  }
+  
+  console.log('Edit form populated:', editForm.value);
+  showEditModal.value = true
+}
+
+const updateGrade = async () => {
+  try {
+    submitting.value = true
+    
+    console.log('=== UPDATE GRADE DEBUG ===');
+    console.log('Updating grade with data:', editForm.value);
+    
+    const updateData = {
+      student: editForm.value.student,
+      assignment: editForm.value.assignment,
+      course: editForm.value.course,
+      points: editForm.value.points,
+      feedback: editForm.value.feedback
+    };
+    
+    console.log('Sending update data:', updateData);
+    
+    const response = await fetch('/api/grades', {
+      method: 'POST', // Backend handles create/update in same endpoint
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authStore.token}`
+      },
+      body: JSON.stringify(updateData)
+    })
+    
+    if (response.ok) {
+      const updatedGrade = await response.json();
+      console.log('Grade updated successfully:', updatedGrade);
+      showMessage('Grade updated successfully!', 'success')
+      closeEditModal()
+      await fetchGrades()
+    } else {
+      const data = await response.json()
+      console.error('Update failed:', data);
+      showMessage(data.message || 'Failed to update grade', 'error')
+    }
+  } catch (error) {
+    console.error('Error updating grade:', error);
+    showMessage('Error updating grade', 'error')
+  } finally {
+    submitting.value = false
+  }
 }
 
 const deleteGrade = async (grade) => {
@@ -354,6 +537,21 @@ const closeModal = () => {
   }
   courseAssignments.value = []
   courseStudents.value = []
+}
+
+const closeEditModal = () => {
+  showEditModal.value = false
+  editForm.value = {
+    id: '',
+    student: '',
+    studentName: '',
+    assignment: '',
+    assignmentTitle: '',
+    course: '',
+    points: 0,
+    maxScore: 0,
+    feedback: ''
+  }
 }
 
 const showMessage = (msg, type) => {

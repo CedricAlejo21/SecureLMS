@@ -72,7 +72,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-500 mb-4">
               <div>Due: {{ formatDate(assignment.dueDate) }}</div>
-              <div>Max Points: {{ assignment.maxPoints }}</div>
+              <div>Max Score: {{ assignment.maxScore }}</div>
               <div>Created: {{ formatDate(assignment.createdAt) }}</div>
             </div>
 
@@ -120,12 +120,13 @@
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Due Date</label>
-                  <input v-model="form.dueDate" type="datetime-local" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                  <input v-model="form.dueDate" type="date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                  <p class="mt-1 text-xs text-gray-500">Assignment will be due at 11:59 PM on the selected date</p>
                 </div>
                 
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">Max Points</label>
-                  <input v-model.number="form.maxPoints" type="number" min="1" max="1000" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                  <label class="block text-sm font-medium text-gray-700">Max Score</label>
+                  <input v-model.number="form.maxScore" type="number" min="1" max="1000" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
                 </div>
               </div>
               
@@ -135,6 +136,57 @@
                 </button>
                 <button type="submit" :disabled="submitting" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
                   {{ submitting ? 'Creating...' : 'Create' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+            <h3 class="text-lg font-medium mb-4">Edit Assignment</h3>
+            
+            <form @submit.prevent="updateAssignment" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Title</label>
+                <input v-model="editForm.title" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea v-model="editForm.description" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Course</label>
+                <select v-model="editForm.course" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                  <option value="">Select a course</option>
+                  <option v-for="course in userCourses" :key="course._id" :value="course._id">
+                    {{ course.title }}
+                  </option>
+                </select>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Due Date</label>
+                  <input v-model="editForm.dueDate" type="date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                  <p class="mt-1 text-xs text-gray-500">Assignment will be due at 11:59 PM on the selected date</p>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Max Score</label>
+                  <input v-model.number="editForm.maxScore" type="number" min="1" max="1000" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+              </div>
+              
+              <div class="flex justify-end space-x-3 pt-4">
+                <button type="button" @click="closeEditModal" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                  Cancel
+                </button>
+                <button type="submit" :disabled="submitting" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
+                  {{ submitting ? 'Updating...' : 'Update' }}
                 </button>
               </div>
             </form>
@@ -165,6 +217,7 @@ const assignments = ref([])
 const userCourses = ref([])
 const loading = ref(true)
 const showCreateModal = ref(false)
+const showEditModal = ref(false)
 const submitting = ref(false)
 const message = ref('')
 const messageType = ref('')
@@ -174,7 +227,16 @@ const form = ref({
   description: '',
   course: '',
   dueDate: '',
-  maxPoints: 100
+  maxScore: 100
+})
+
+const editForm = ref({
+  id: '',
+  title: '',
+  description: '',
+  course: '',
+  dueDate: '',
+  maxScore: 100
 })
 
 // Computed
@@ -190,42 +252,87 @@ const messageClass = computed(() => {
 
 // Methods
 const canEdit = (assignment) => {
-  return authStore.user?.role === 'admin' || 
-         (authStore.user?.role === 'instructor' && assignment.course?.instructor === authStore.user?.id)
+  console.log('=== ASSIGNMENT EDIT PERMISSION CHECK ===');
+  console.log('User role:', authStore.user?.role);
+  console.log('User ID (id):', authStore.user?.id);
+  console.log('User ID (userId):', authStore.user?.userId);
+  console.log('User ID (_id):', authStore.user?._id);
+  console.log('Assignment course instructor:', assignment.course?.instructor);
+  console.log('Assignment course instructor ID:', assignment.course?.instructor?._id);
+  
+  const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+  const instructorId = assignment.course?.instructor?._id || assignment.course?.instructor;
+  
+  console.log('Resolved user ID:', userId);
+  console.log('Resolved instructor ID:', instructorId);
+  console.log('Are they equal (string comparison):', userId?.toString() === instructorId?.toString());
+  
+  const canEdit = authStore.user?.role === 'admin' || 
+         (authStore.user?.role === 'instructor' && userId?.toString() === instructorId?.toString());
+         
+  console.log('Can edit result:', canEdit);
+  return canEdit;
 }
 
 const canDelete = (assignment) => {
-  return canEdit(assignment)
+  return canEdit(assignment);
 }
 
 const formatDate = (dateString) => {
   if (!dateString) return ''
-  return new Date(dateString).toLocaleString()
+  return new Date(dateString).toLocaleDateString()
 }
 
 const fetchAssignments = async () => {
   try {
     loading.value = true
-    // Get assignments for all courses the user has access to
-    const coursePromises = userCourses.value.map(course => 
-      fetch(`/api/assignments/course/${course._id}`, {
-        headers: { 'Authorization': `Bearer ${authStore.token}` }
-      })
-    )
     
-    const responses = await Promise.all(coursePromises)
-    const assignmentArrays = await Promise.all(
-      responses.map(res => res.ok ? res.json() : [])
-    )
+    console.log('=== ASSIGNMENTS FRONTEND DEBUG ===')
+    console.log('Auth store user:', authStore.user)
+    console.log('User role:', authStore.user?.role)
+    console.log('Fetching assignments from general endpoint...')
     
-    assignments.value = assignmentArrays.flat()
+    // Use the general assignments endpoint that handles role-based filtering
+    const response = await fetch('/api/assignments', {
+      headers: { 'Authorization': `Bearer ${authStore.token}` }
+    })
+    
+    if (response.ok) {
+      assignments.value = await response.json()
+      console.log('Assignments received:', assignments.value.length)
+      console.log('Sample assignment structure:', assignments.value.length > 0 ? {
+        id: assignments.value[0]._id,
+        title: assignments.value[0].title,
+        course: {
+          id: assignments.value[0].course?._id,
+          title: assignments.value[0].course?.title,
+          instructor: assignments.value[0].course?.instructor
+        }
+      } : 'No assignments received')
+      
+      // Test permission check on first assignment
+      if (assignments.value.length > 0) {
+        console.log('Testing permission check on first assignment:')
+        const testResult = canEdit(assignments.value[0])
+        console.log('Permission check result:', testResult)
+      }
+      
+      await fetchSubmissionStatuses()
+    } else {
+      const errorData = await response.json()
+      console.error('Error fetching assignments:', errorData)
+      showMessage(errorData.message || 'Error fetching assignments', 'error')
+      assignments.value = []
+    }
     
     // For students, fetch submission status for each assignment
     if (authStore.user?.role === 'student') {
       await fetchSubmissionStatuses()
     }
   } catch (error) {
+    console.error('Error in fetchAssignments:', error)
     showMessage('Error fetching assignments', 'error')
+    assignments.value = []
   } finally {
     loading.value = false
   }
@@ -233,9 +340,19 @@ const fetchAssignments = async () => {
 
 const fetchSubmissionStatuses = async () => {
   try {
+    // Get the user ID with fallback options
+    const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
+    
+    if (!userId) {
+      console.log('No user ID available for submission status check');
+      return;
+    }
+    
+    console.log('Fetching submission statuses for user:', userId);
+    
     const submissionPromises = assignments.value.map(async (assignment) => {
       try {
-        const response = await fetch(`/api/submissions/${assignment._id}/${authStore.user?.id}`, {
+        const response = await fetch(`/api/submissions/${assignment._id}/${userId}`, {
           headers: { 'Authorization': `Bearer ${authStore.token}` }
         })
         
@@ -310,8 +427,66 @@ const submitAssignment = async () => {
 }
 
 const editAssignment = (assignment) => {
-  // For now, just show a message - full edit functionality can be added later
-  showMessage('Edit functionality coming soon!', 'error')
+  editForm.value.id = assignment._id
+  editForm.value.title = assignment.title
+  editForm.value.description = assignment.description
+  editForm.value.course = assignment.course?._id
+  editForm.value.dueDate = assignment.dueDate
+  editForm.value.maxScore = assignment.maxScore
+  showEditModal.value = true
+}
+
+const updateAssignment = async () => {
+  try {
+    submitting.value = true
+    
+    console.log('=== UPDATE ASSIGNMENT DEBUG ===');
+    console.log('Edit form data:', editForm.value);
+    
+    // Convert date to end-of-day datetime if it's just a date
+    const updateData = { ...editForm.value };
+    if (updateData.dueDate && !updateData.dueDate.includes('T')) {
+      const date = new Date(updateData.dueDate);
+      date.setHours(23, 59, 59, 999);
+      updateData.dueDate = date.toISOString();
+    }
+    
+    // Map maxScore to maxPoints for API compatibility
+    updateData.maxPoints = updateData.maxScore;
+    delete updateData.maxScore;
+    
+    console.log('Sending update data:', updateData);
+    
+    const response = await fetch(`/api/assignments/${editForm.value.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authStore.token}`
+      },
+      body: JSON.stringify(updateData)
+    })
+    
+    if (response.ok) {
+      const updatedAssignment = await response.json();
+      console.log('Assignment updated successfully:', updatedAssignment);
+      
+      showMessage('Assignment updated successfully!', 'success')
+      closeEditModal()
+      
+      // Force refresh the assignments list
+      await fetchAssignments()
+      console.log('Assignments list refreshed');
+    } else {
+      const data = await response.json()
+      console.error('Update failed:', data);
+      showMessage(data.message || 'Failed to update assignment', 'error')
+    }
+  } catch (error) {
+    console.error('Error updating assignment:', error);
+    showMessage('Error updating assignment', 'error')
+  } finally {
+    submitting.value = false
+  }
 }
 
 const deleteAssignment = async (assignment) => {
@@ -328,9 +503,11 @@ const deleteAssignment = async (assignment) => {
       fetchAssignments()
     } else {
       const data = await response.json()
+      console.error('Delete failed:', data);
       showMessage(data.message || 'Failed to delete assignment', 'error')
     }
   } catch (error) {
+    console.error('Error deleting assignment:', error);
     showMessage('Error deleting assignment', 'error')
   }
 }
@@ -346,7 +523,19 @@ const closeModal = () => {
     description: '',
     course: '',
     dueDate: '',
-    maxPoints: 100
+    maxScore: 100
+  }
+}
+
+const closeEditModal = () => {
+  showEditModal.value = false
+  editForm.value = {
+    id: '',
+    title: '',
+    description: '',
+    course: '',
+    dueDate: '',
+    maxScore: 100
   }
 }
 
