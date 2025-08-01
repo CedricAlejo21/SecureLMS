@@ -11,6 +11,7 @@ import StudentDashboard from '../views/StudentDashboard.vue'
 import Courses from '../views/Courses.vue'
 import CourseDetail from '../views/CourseDetail.vue'
 import Assignments from '../views/Assignments.vue'
+import AssignmentDetail from '../views/AssignmentDetail.vue'
 import Grades from '../views/Grades.vue'
 import Profile from '../views/Profile.vue'
 import Users from '../views/Users.vue'
@@ -85,6 +86,12 @@ const routes = [
     path: '/assignments',
     name: 'Assignments',
     component: Assignments,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/assignments/:id',
+    name: 'AssignmentDetail',
+    component: AssignmentDetail,
     meta: { requiresAuth: true }
   },
   {

@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const courseRoutes = require('./routes/courses');
 const assignmentRoutes = require('./routes/assignments');
+const submissionRoutes = require('./routes/submissions');
 const gradeRoutes = require('./routes/grades');
 const auditRoutes = require('./routes/audit');
 
@@ -102,6 +103,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/assignments', assignmentRoutes);
+app.use('/api/submissions', submissionRoutes);
 app.use('/api/grades', gradeRoutes);
 app.use('/api/audit', auditRoutes);
 

@@ -27,21 +27,44 @@
                 <h3 class="text-lg font-medium text-gray-900">{{ assignment.title }}</h3>
                 <p class="text-sm text-gray-600">{{ assignment.course?.title }}</p>
               </div>
-              <div class="flex space-x-2">
-                <button
-                  v-if="canEdit(assignment)"
-                  @click="editAssignment(assignment)"
-                  class="text-indigo-600 hover:text-indigo-900 text-sm"
-                >
-                  Edit
-                </button>
-                <button
-                  v-if="canDelete(assignment)"
-                  @click="deleteAssignment(assignment)"
-                  class="text-red-600 hover:text-red-900 text-sm"
-                >
-                  Delete
-                </button>
+              <div class="flex items-center space-x-2">
+                <!-- Submission Status for Students -->
+                <div v-if="authStore.user?.role === 'student' && assignment.submissionStatus" class="flex items-center">
+                  <span v-if="assignment.submissionStatus.submitted && assignment.submissionStatus.isLate" 
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Late
+                  </span>
+                  <span v-else-if="assignment.submissionStatus.submitted" 
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Submitted
+                  </span>
+                  <span v-else-if="new Date() > new Date(assignment.dueDate)" 
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    Overdue
+                  </span>
+                  <span v-else 
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    Not Submitted
+                  </span>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex space-x-2">
+                  <button
+                    v-if="canEdit(assignment)"
+                    @click="editAssignment(assignment)"
+                    class="text-indigo-600 hover:text-indigo-900 text-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    v-if="canDelete(assignment)"
+                    @click="deleteAssignment(assignment)"
+                    class="text-red-600 hover:text-red-900 text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
             
@@ -196,10 +219,51 @@ const fetchAssignments = async () => {
     )
     
     assignments.value = assignmentArrays.flat()
+    
+    // For students, fetch submission status for each assignment
+    if (authStore.user?.role === 'student') {
+      await fetchSubmissionStatuses()
+    }
   } catch (error) {
     showMessage('Error fetching assignments', 'error')
   } finally {
     loading.value = false
+  }
+}
+
+const fetchSubmissionStatuses = async () => {
+  try {
+    const submissionPromises = assignments.value.map(async (assignment) => {
+      try {
+        const response = await fetch(`/api/submissions/${assignment._id}/${authStore.user?.id}`, {
+          headers: { 'Authorization': `Bearer ${authStore.token}` }
+        })
+        
+        if (response.ok) {
+          const submission = await response.json()
+          assignment.submissionStatus = {
+            submitted: true,
+            isLate: submission.isLate,
+            submittedAt: submission.submittedAt,
+            grade: submission.grade
+          }
+        } else {
+          assignment.submissionStatus = {
+            submitted: false,
+            isLate: false
+          }
+        }
+      } catch (error) {
+        assignment.submissionStatus = {
+          submitted: false,
+          isLate: false
+        }
+      }
+    })
+    
+    await Promise.all(submissionPromises)
+  } catch (error) {
+    console.error('Error fetching submission statuses:', error)
   }
 }
 
