@@ -127,12 +127,25 @@ router.post('/login', [
         errorMessage: 'Invalid credentials'
       });
       
-      return res.status(401).json({ message: 'Invalid username and/or password' });
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Check if account is locked
+    // Check if account is locked (separate check after user is found)
     if (user.isLocked) {
-      return res.status(423).json({ message: 'Account is locked due to multiple failed login attempts' });
+      await AuditLog.log({
+        user: user._id,
+        action: 'LOGIN_FAILED',
+        resource: 'Auth',
+        details: { username, reason: 'Account locked' },
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        success: false,
+        errorMessage: 'Account locked'
+      });
+      
+      return res.status(423).json({ 
+        message: 'Account is temporarily locked due to multiple failed login attempts. Please try again later or contact support.' 
+      });
     }
 
     // Reset failed login attempts

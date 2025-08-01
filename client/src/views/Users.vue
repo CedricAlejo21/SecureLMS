@@ -94,9 +94,17 @@
                       </button>
                       <button
                         @click="viewUserActivity(user)"
-                        class="text-indigo-600 hover:text-indigo-900"
+                        class="text-indigo-600 hover:text-indigo-900 mr-4"
                       >
                         View Activity
+                      </button>
+                      <!-- Admin delete button -->
+                      <button
+                        v-if="isAdmin && user._id !== authStore.user?.id"
+                        @click="confirmDeleteUser(user)"
+                        class="text-red-600 hover:text-red-900"
+                      >
+                        Delete
                       </button>
                     </td>
                   </tr>
@@ -108,10 +116,42 @@
       </div>
     </div>
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+      <h3 class="text-lg font-medium mb-4 text-red-600">Delete User</h3>
+      <p class="text-gray-600 mb-6">
+        Are you sure you want to delete "{{ userToDelete?.firstName }} {{ userToDelete?.lastName }}"? This action cannot be undone.
+      </p>
+      <div class="flex space-x-3">
+        <button
+          @click="deleteUser"
+          :disabled="deleting"
+          class="flex-1 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:opacity-50"
+        >
+          {{ deleting ? 'Deleting...' : 'Delete' }}
+        </button>
+        <button
+          @click="cancelDelete"
+          class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Message -->
+  <div v-if="message" class="fixed top-4 right-4 max-w-sm">
+    <div :class="messageClass" class="rounded-md p-4 shadow-lg">
+      <p class="text-sm">{{ message }}</p>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import axios from 'axios'
 
@@ -119,6 +159,22 @@ const authStore = useAuthStore()
 const users = ref([])
 const loading = ref(false)
 const showCreateModal = ref(false)
+const showDeleteModal = ref(false)
+const userToDelete = ref(null)
+const deleting = ref(false)
+const message = ref('')
+const messageType = ref('success')
+
+// Computed
+const isAdmin = computed(() => {
+  return authStore.user?.role === 'admin'
+})
+
+const messageClass = computed(() => {
+  return messageType.value === 'success' 
+    ? 'bg-green-50 border border-green-200 text-green-800'
+    : 'bg-red-50 border border-red-200 text-red-800'
+})
 
 const fetchUsers = async () => {
   try {
@@ -153,6 +209,47 @@ const toggleUserStatus = async (user) => {
 const viewUserActivity = (user) => {
   // Navigate to audit logs filtered by user
   window.location.href = `/audit-logs?user=${user._id}`
+}
+
+const confirmDeleteUser = (user) => {
+  userToDelete.value = user
+  showDeleteModal.value = true
+}
+
+const cancelDelete = () => {
+  showDeleteModal.value = false
+  userToDelete.value = null
+}
+
+const deleteUser = async () => {
+  if (!userToDelete.value) return
+  
+  try {
+    deleting.value = true
+    await axios.delete(`/users/${userToDelete.value._id}`, {
+      headers: {
+        Authorization: `Bearer ${authStore.token}`
+      }
+    })
+    
+    showMessage('User deleted successfully!', 'success')
+    cancelDelete()
+    fetchUsers()
+  } catch (error) {
+    console.error('Error deleting user:', error)
+    const errorMessage = error.response?.data?.message || 'Failed to delete user'
+    showMessage(errorMessage, 'error')
+  } finally {
+    deleting.value = false
+  }
+}
+
+const showMessage = (msg, type) => {
+  message.value = msg
+  messageType.value = type
+  setTimeout(() => {
+    message.value = ''
+  }, 5000)
 }
 
 onMounted(() => {

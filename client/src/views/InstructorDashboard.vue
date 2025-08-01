@@ -66,8 +66,11 @@
             <div class="px-6 py-4 border-b border-gray-200">
               <div class="flex items-center justify-between">
                 <h3 class="text-lg font-medium text-gray-900">My Courses</h3>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-sm font-medium">
-                  New Course
+                <button
+                  @click="$router.push('/courses')"
+                  class="text-sm text-indigo-600 hover:text-indigo-900"
+                >
+                  View All
                 </button>
               </div>
             </div>
@@ -102,8 +105,11 @@
             <div class="px-6 py-4 border-b border-gray-200">
               <div class="flex items-center justify-between">
                 <h3 class="text-lg font-medium text-gray-900">Recent Assignments</h3>
-                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium">
-                  New Assignment
+                <button
+                  @click="$router.push('/assignments')"
+                  class="text-sm text-indigo-600 hover:text-indigo-900"
+                >
+                  View All
                 </button>
               </div>
             </div>
@@ -127,6 +133,40 @@
                     <span class="text-xs text-gray-500">{{ assignment.submissions || 0 }} submissions</span>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8">
+          <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+            </div>
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button
+                  @click="$router.push('/courses/create')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">📚</span>
+                  Create Course
+                </button>
+                <button
+                  @click="$router.push('/assignments/create')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">📝</span>
+                  Create Assignment
+                </button>
+                <button
+                  @click="$router.push('/courses')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">👥</span>
+                  Manage Students
+                </button>
               </div>
             </div>
           </div>

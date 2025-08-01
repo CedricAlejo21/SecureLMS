@@ -126,6 +126,41 @@
             </div>
           </div>
         </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8">
+          <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+            </div>
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button
+                  @click="$router.push('/courses')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">📚</span>
+                  Browse Courses
+                </button>
+                <button
+                  @click="$router.push('/assignments')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">📝</span>
+                  View Assignments
+                </button>
+                <button
+                  @click="$router.push('/grades')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">📊</span>
+                  Check Grades
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

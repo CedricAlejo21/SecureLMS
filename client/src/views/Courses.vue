@@ -86,6 +86,11 @@
               <button v-if="canUnenroll(course)" @click="unenrollFromCourse(course)" class="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700">
                 Unenroll
               </button>
+              
+              <!-- Admin delete button -->
+              <button v-if="isAdmin" @click="confirmDeleteCourse(course)" class="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700">
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -159,6 +164,31 @@
           </div>
         </div>
 
+        <!-- Delete Confirmation Modal -->
+        <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 class="text-lg font-medium mb-4 text-red-600">Delete Course</h3>
+            <p class="text-gray-600 mb-6">
+              Are you sure you want to delete "{{ courseToDelete?.title }}"? This action cannot be undone.
+            </p>
+            <div class="flex space-x-3">
+              <button
+                @click="deleteCourse"
+                :disabled="deleting"
+                class="flex-1 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:opacity-50"
+              >
+                {{ deleting ? 'Deleting...' : 'Delete' }}
+              </button>
+              <button
+                @click="cancelDelete"
+                class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div v-if="message" class="fixed top-4 right-4 max-w-sm">
           <div :class="messageClass" class="rounded-md p-4 shadow-lg">
             <p class="text-sm">{{ message }}</p>
@@ -184,8 +214,11 @@ const loading = ref(true)
 const showCreateModal = ref(false)
 const submitting = ref(false)
 const message = ref('')
-const messageType = ref('')
+const messageType = ref('success')
 const showMyCoursesOnly = ref(true) // Default to showing enrolled courses for students
+const showDeleteModal = ref(false)
+const courseToDelete = ref(null)
+const deleting = ref(false)
 
 const courseForm = ref({
   title: '',
@@ -202,6 +235,10 @@ const canCreateCourse = computed(() => {
 
 const isStudent = computed(() => {
   return authStore.user?.role === 'student'
+})
+
+const isAdmin = computed(() => {
+  return authStore.user?.role === 'admin'
 })
 
 const displayedCourses = computed(() => {
@@ -336,6 +373,39 @@ const closeModal = () => {
     startDate: '',
     endDate: '',
     maxStudents: 30
+  }
+}
+
+const confirmDeleteCourse = (course) => {
+  courseToDelete.value = course
+  showDeleteModal.value = true
+}
+
+const cancelDelete = () => {
+  showDeleteModal.value = false
+  courseToDelete.value = null
+}
+
+const deleteCourse = async () => {
+  if (!courseToDelete.value) return
+  
+  try {
+    deleting.value = true
+    await axios.delete(`/courses/${courseToDelete.value._id}`, {
+      headers: {
+        'Authorization': `Bearer ${authStore.token}`
+      }
+    })
+    
+    showMessage('Course deleted successfully!', 'success')
+    cancelDelete()
+    fetchCourses()
+  } catch (error) {
+    console.error('Error deleting course:', error)
+    const errorMessage = error.response?.data?.message || 'Failed to delete course'
+    showMessage(errorMessage, 'error')
+  } finally {
+    deleting.value = false
   }
 }
 

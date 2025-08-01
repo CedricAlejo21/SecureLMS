@@ -104,12 +104,12 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// Instance method to check password
+// Method to check if password is correct
 userSchema.methods.correctPassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// Instance method to check if password was changed after JWT was issued
+// Method to check if password was changed after JWT was issued
 userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
@@ -118,7 +118,7 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   return false;
 };
 
-// Instance method to check password minimum age (24 hours)
+// Method to check password minimum age (24 hours)
 userSchema.methods.canChangePassword = function() {
   if (!this.passwordChangedAt) return true; // First time password change
   
@@ -126,7 +126,7 @@ userSchema.methods.canChangePassword = function() {
   return this.passwordChangedAt < twentyFourHoursAgo;
 };
 
-// Instance method to increment failed login attempts
+// Method to increment login attempts
 userSchema.methods.incLoginAttempts = function() {
   if (this.lockUntil && this.lockUntil < Date.now()) {
     return this.updateOne({
@@ -153,11 +153,11 @@ userSchema.statics.findByCredentials = async function(username, password) {
   }).select('+password');
   
   if (!user || !(await user.correctPassword(password))) {
-    throw new Error('Invalid username and/or password');
+    return null; 
   }
   
   if (user.isLocked) {
-    throw new Error('Account is locked due to multiple failed login attempts');
+    return null; 
   }
   
   return user;

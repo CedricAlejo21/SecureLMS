@@ -140,6 +140,23 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   
+  // Wait for auth initialization to complete
+  if (!authStore.isInitialized) {
+    // Wait for initialization to complete
+    let attempts = 0
+    const maxAttempts = 50 // 5 seconds max wait
+    
+    while (!authStore.isInitialized && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      attempts++
+    }
+    
+    // If still not initialized after timeout, proceed anyway
+    if (!authStore.isInitialized) {
+      console.warn('Auth initialization timeout, proceeding with navigation')
+    }
+  }
+  
   // Check if route requires authentication
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated) {

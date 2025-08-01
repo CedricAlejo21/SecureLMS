@@ -5,298 +5,339 @@
         <!-- Header -->
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p class="mt-2 text-sm text-gray-600">
-            Welcome to the administrative control panel. Manage users, monitor system activity, and configure settings.
-          </p>
+          <p class="mt-1 text-sm text-gray-600">System overview and administrative controls</p>
         </div>
 
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Total Users</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ stats.totalUsers }}</dd>
-                  </dl>
-                </div>
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white overflow-hidden shadow rounded-lg p-5">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
+                <span class="text-white text-sm">👥</span>
+              </div>
+              <div class="ml-5">
+                <p class="text-sm font-medium text-gray-500">Total Users</p>
+                <p class="text-lg font-medium text-gray-900">{{ stats.totalUsers }}</p>
               </div>
             </div>
           </div>
 
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Security Events</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ stats.securityEvents }}</dd>
-                  </dl>
-                </div>
+          <div class="bg-white overflow-hidden shadow rounded-lg p-5">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
+                <span class="text-white text-sm">📚</span>
+              </div>
+              <div class="ml-5">
+                <p class="text-sm font-medium text-gray-500">Active Courses</p>
+                <p class="text-lg font-medium text-gray-900">{{ stats.activeCourses }}</p>
               </div>
             </div>
           </div>
 
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">Active Courses</dt>
-                    <dd class="text-lg font-medium text-gray-900">{{ stats.activeCourses }}</dd>
-                  </dl>
-                </div>
+          <div class="bg-white overflow-hidden shadow rounded-lg p-5">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
+                <span class="text-white text-sm">🔒</span>
+              </div>
+              <div class="ml-5">
+                <p class="text-sm font-medium text-gray-500">Security Events</p>
+                <p class="text-lg font-medium text-gray-900">{{ stats.securityEvents }}</p>
               </div>
             </div>
           </div>
 
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">System Status</dt>
-                    <dd class="text-lg font-medium text-green-600">Healthy</dd>
-                  </dl>
-                </div>
+          <div class="bg-white overflow-hidden shadow rounded-lg p-5">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
+                <span class="text-white text-sm">⚡</span>
+              </div>
+              <div class="ml-5">
+                <p class="text-sm font-medium text-gray-500">System Status</p>
+                <p class="text-lg font-medium text-green-600">Online</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Admin Actions -->
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- User Management -->
-          <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-200">
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Recent Users -->
+          <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 class="text-lg font-medium text-gray-900">Recent Users</h3>
+              <button
+                @click="$router.push('/users')"
+                class="text-sm text-indigo-600 hover:text-indigo-900"
+              >
+                View All
+              </button>
+            </div>
             <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
-                </div>
-                <div class="ml-5">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">User Management</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    Create, edit, and manage user accounts. View user activity and manage permissions.
-                  </p>
+              <div v-if="loading" class="text-center py-4">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="mt-2 text-sm text-gray-600">Loading users...</p>
+              </div>
+              <div v-else-if="users.length === 0" class="text-center py-8">
+                <h3 class="text-sm font-medium text-gray-900">No users found</h3>
+                <p class="mt-1 text-sm text-gray-500">Users will appear here once created.</p>
+              </div>
+              <div v-else class="space-y-4">
+                <div v-for="user in users.slice(0, 5)" :key="user._id" class="flex items-center justify-between border border-gray-200 rounded-lg p-4">
+                  <div class="flex items-center">
+                    <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                      <span class="text-xs font-medium text-white">
+                        {{ user.firstName?.[0] }}{{ user.lastName?.[0] }}
+                      </span>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">{{ user.firstName }} {{ user.lastName }}</p>
+                      <p class="text-xs text-gray-500">{{ user.role }}</p>
+                    </div>
+                  </div>
+                  <span :class="[
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                    user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  ]">
+                    {{ user.isActive ? 'Active' : 'Inactive' }}
+                  </span>
                 </div>
               </div>
-              <div class="mt-6">
-                <router-link
-                  to="/users"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            </div>
+          </div>
+
+          <!-- Recent Courses -->
+          <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 class="text-lg font-medium text-gray-900">Recent Courses</h3>
+              <button
+                @click="$router.push('/courses')"
+                class="text-sm text-indigo-600 hover:text-indigo-900"
+              >
+                View All
+              </button>
+            </div>
+            <div class="p-6">
+              <div v-if="loading" class="text-center py-4">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600 mx-auto"></div>
+                <p class="mt-2 text-sm text-gray-600">Loading courses...</p>
+              </div>
+              <div v-else-if="courses.length === 0" class="text-center py-8">
+                <h3 class="text-sm font-medium text-gray-900">No courses found</h3>
+                <p class="mt-1 text-sm text-gray-500">Courses will appear here once created.</p>
+              </div>
+              <div v-else class="space-y-4">
+                <div v-for="course in courses.slice(0, 5)" :key="course._id" class="border border-gray-200 rounded-lg p-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-900">{{ course.title }}</h4>
+                      <p class="text-xs text-gray-500">{{ course.instructor?.firstName }} {{ course.instructor?.lastName }}</p>
+                      <p class="text-xs text-gray-400 mt-1">{{ course.students?.length || 0 }} students enrolled</p>
+                    </div>
+                    <span :class="[
+                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                      course.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    ]">
+                      {{ course.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8">
+          <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+            </div>
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button
+                  @click="showCreateUserModal = true"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
+                  <span class="mr-2">👤</span>
+                  Create User
+                </button>
+                <button
+                  @click="$router.push('/users')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <span class="mr-2">👥</span>
                   Manage Users
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Audit Logs -->
-          <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-200">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div class="ml-5">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">Audit Logs</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    Monitor security events, user activities, and system access logs.
-                  </p>
-                </div>
-              </div>
-              <div class="mt-6">
-                <router-link
-                  to="/audit-logs"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                </button>
+                <button
+                  @click="$router.push('/courses')"
+                  class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
-                  View Logs
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Settings -->
-          <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-200">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div class="ml-5">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">System Settings</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    Configure security policies, system parameters, and application settings.
-                  </p>
-                </div>
-              </div>
-              <div class="mt-6">
-                <router-link
-                  to="/settings"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                >
-                  Configure
-                </router-link>
+                  <span class="mr-2">📚</span>
+                  Manage Courses
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Create/Edit User Modal -->
-    <div v-if="showCreateModal || showEditModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div class="mt-3">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">
-            {{ showCreateModal ? 'Create New User' : 'Edit User' }}
-          </h3>
-          
-          <form @submit.prevent="showCreateModal ? createUser() : updateUser()">
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-              <input 
-                v-model="userForm.firstName" 
-                type="text" 
-                required 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-              <input 
-                v-model="userForm.lastName" 
-                type="text" 
-                required 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input 
-                v-model="userForm.email" 
-                type="email" 
-                required 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-              <select 
-                v-model="userForm.role" 
-                required 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="">Select Role</option>
-                <option value="admin">Admin</option>
-                <option value="instructor">Instructor</option>
-                <option value="student">Student</option>
-              </select>
-            </div>
-
-            <div v-if="showCreateModal" class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <input 
-                v-model="userForm.password" 
-                type="password" 
-                required 
-                minlength="12"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-              <p class="mt-1 text-xs text-gray-500">Minimum 12 characters required</p>
-            </div>
-
-            <div v-if="error" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-              {{ error }}
-            </div>
-
-            <div class="flex justify-end space-x-3">
-              <button 
-                type="button" 
-                @click="closeModal" 
-                class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-md"
-              >
-                Cancel
-              </button>
-              <button 
-                type="submit" 
-                :disabled="submitting"
-                class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md disabled:opacity-50"
-              >
-                {{ submitting ? 'Saving...' : (showCreateModal ? 'Create User' : 'Update User') }}
-              </button>
-            </div>
-          </form>
+  <!-- Create User Modal -->
+  <div v-if="showCreateUserModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+      <h3 class="text-lg font-medium mb-4">Create User</h3>
+      <form @submit.prevent="submitUser" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">First Name</label>
+            <input v-model="userForm.firstName" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Last Name</label>
+            <input v-model="userForm.lastName" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+          </div>
         </div>
-      </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input v-model="userForm.email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Role</label>
+          <select v-model="userForm.role" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <input v-model="userForm.password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+        </div>
+        <div class="flex space-x-3">
+          <button
+            type="submit"
+            :disabled="submitting"
+            class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
+          >
+            {{ submitting ? 'Creating...' : 'Create' }}
+          </button>
+          <button
+            type="button"
+            @click="closeCreateUserModal"
+            class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Message -->
+  <div v-if="message" class="fixed top-4 right-4 max-w-sm">
+    <div :class="messageClass" class="rounded-md p-4 shadow-lg">
+      <p class="text-sm">{{ message }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useToast } from 'vue-toastification'
 import axios from 'axios'
 
 const authStore = useAuthStore()
+const toast = useToast()
+
 const stats = ref({
   totalUsers: 0,
   activeCourses: 0,
   securityEvents: 0
 })
 
+const users = ref([])
+const courses = ref([])
+const showCreateUserModal = ref(false)
+const submitting = ref(false)
+const error = ref('')
+const loading = ref(false)
+
+const userForm = ref({
+  firstName: '',
+  lastName: '',
+  email: '',
+  role: '',
+  password: ''
+})
+
+const message = ref('')
+const messageClass = ref('')
+
 const fetchStats = async () => {
+  if (!authStore.isAuthenticated) {
+    console.log('Not authenticated, skipping data fetch')
+    return
+  }
+
   try {
-    // Fetch basic statistics for dashboard
-    const [usersResponse, auditResponse] = await Promise.all([
-      axios.get('/users', {
-        headers: { Authorization: `Bearer ${authStore.token}` }
-      }),
-      axios.get('/audit', {
-        headers: { Authorization: `Bearer ${authStore.token}` }
-      })
+    loading.value = true
+    const [usersResponse, coursesResponse, auditResponse] = await Promise.all([
+      axios.get('/users'),
+      axios.get('/courses'),
+      axios.get('/audit').catch(() => ({ data: { logs: [] } }))
     ])
 
+    users.value = usersResponse.data
+    courses.value = coursesResponse.data
     stats.value.totalUsers = usersResponse.data.length || 0
-    stats.value.activeCourses = 12 // Placeholder - would come from courses API
-    stats.value.securityEvents = auditResponse.data.logs?.length || auditResponse.data.length || 0
+    stats.value.activeCourses = coursesResponse.data.filter(c => c.isActive).length || 0
+    stats.value.securityEvents = auditResponse.data.logs?.length || 0
   } catch (error) {
-    console.error('Error fetching dashboard stats:', error)
+    console.error('Error fetching dashboard data:', error)
+    if (error.response?.status !== 401) {
+      toast.error('Failed to load dashboard data')
+    }
+  } finally {
+    loading.value = false
   }
 }
 
+const submitUser = async () => {
+  try {
+    submitting.value = true
+    error.value = ''
+
+    await axios.post('/users', userForm.value)
+
+    toast.success('User created successfully')
+    closeCreateUserModal()
+    await fetchStats()
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Failed to create user'
+  } finally {
+    submitting.value = false
+  }
+}
+
+const closeCreateUserModal = () => {
+  showCreateUserModal.value = false
+  error.value = ''
+}
+
+// Watch for auth initialization and fetch data when ready
+watch(() => authStore.isAuthenticated, (isAuthenticated) => {
+  if (isAuthenticated) {
+    fetchStats()
+  }
+}, { immediate: true })
+
+// Also fetch on mount if already authenticated
 onMounted(() => {
-  fetchStats()
+  if (authStore.isAuthenticated) {
+    fetchStats()
+  }
 })
 </script>
