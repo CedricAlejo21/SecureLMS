@@ -3,9 +3,10 @@ const { body, validationResult } = require('express-validator');
 const Grade = require('../models/Grade');
 const Assignment = require('../models/Assignment');
 const Course = require('../models/Course');
+const User = require('../models/User');
 const AuditLog = require('../models/AuditLog');
-const auth = require('../middleware/auth');
-const { authorize } = require('../middleware/roleAuth');
+const { auth } = require('../middleware/auth');
+const { authorize, isInstructor, isAdmin } = require('../middleware/roleAuth');
 
 const router = express.Router();
 

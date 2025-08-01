@@ -1,9 +1,10 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const AuditLog = require('../models/AuditLog');
-const auth = require('../middleware/auth');
+const { auth, reAuth } = require('../middleware/auth');
 const roleAuth = require('../middleware/roleAuth');
 
 const router = express.Router();
@@ -187,7 +188,7 @@ router.get('/me', auth, async (req, res) => {
 
 // Change password
 router.post('/change-password', [
-  auth,
+  reAuth,
   body('currentPassword')
     .notEmpty()
     .withMessage('Current password is required'),
@@ -204,6 +205,13 @@ router.post('/change-password', [
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.user.userId).select('+password');
 
+    // Check password minimum age (24 hours)
+    if (!user.canChangePassword()) {
+      return res.status(400).json({ 
+        message: 'Password cannot be changed within 24 hours of the last change' 
+      });
+    }
+
     // Verify current password
     const isMatch = await user.correctPassword(currentPassword);
     if (!isMatch) {
@@ -217,9 +225,14 @@ router.post('/change-password', [
     }
 
     // Check password history
-    const isInHistory = user.passwordHistory.some(async (oldPassword) => {
-      return await bcrypt.compare(newPassword, oldPassword.password);
-    });
+    let isInHistory = false;
+    for (const oldPassword of user.passwordHistory) {
+      const matches = await bcrypt.compare(newPassword, oldPassword.password);
+      if (matches) {
+        isInHistory = true;
+        break;
+      }
+    }
 
     if (isInHistory) {
       return res.status(400).json({ message: 'New password cannot be the same as any of your last 5 passwords' });

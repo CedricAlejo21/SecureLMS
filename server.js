@@ -37,7 +37,16 @@ const logger = winston.createLogger({
 });
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Temporarily disable CSP to resolve startup issue
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+}));
+
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
@@ -111,10 +120,18 @@ app.get('*', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  logger.error(err.stack);
-  res.status(500).json({ 
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : {}
+  const errorStatus = err.status || 500;
+  const genericErrorMessage = 'An error occurred. Please try again later.';
+  const errorDetails = process.env.NODE_ENV === 'development' ? err.message : {};
+  logger.error(`Error ${errorStatus}: ${err.stack}`, {
+    ip: req.ip,
+    userAgent: req.get('User-Agent'),
+    timestamp: new Date().toISOString(),
+    errorDetails
+  });
+  res.status(errorStatus).json({ 
+    message: genericErrorMessage,
+    error: errorDetails
   });
 });
 

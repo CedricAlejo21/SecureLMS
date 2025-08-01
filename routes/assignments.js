@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 const Assignment = require('../models/Assignment');
 const Course = require('../models/Course');
 const AuditLog = require('../models/AuditLog');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const { authorize } = require('../middleware/roleAuth');
 
 const router = express.Router();

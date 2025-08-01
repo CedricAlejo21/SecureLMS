@@ -5,7 +5,6 @@ import { useAuthStore } from '../stores/auth'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Dashboard from '../views/Dashboard.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import InstructorDashboard from '../views/InstructorDashboard.vue'
 import StudentDashboard from '../views/StudentDashboard.vue'
@@ -14,6 +13,9 @@ import CourseDetail from '../views/CourseDetail.vue'
 import Assignments from '../views/Assignments.vue'
 import Grades from '../views/Grades.vue'
 import Profile from '../views/Profile.vue'
+import Users from '../views/Users.vue'
+import AuditLogs from '../views/AuditLogs.vue'
+import Settings from '../views/Settings.vue'
 import NotFound from '../views/NotFound.vue'
 
 const routes = [
@@ -38,7 +40,15 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard,
+    redirect: (to) => {
+      const authStore = useAuthStore()
+      const roleRedirects = {
+        admin: '/admin',
+        instructor: '/instructor',
+        student: '/student'
+      }
+      return roleRedirects[authStore.user?.role] || '/admin'
+    },
     meta: { requiresAuth: true }
   },
   {
@@ -88,6 +98,24 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
+    meta: { requiresAuth: true, roles: ['admin'] }
+  },
+  {
+    path: '/audit-logs',
+    name: 'AuditLogs',
+    component: AuditLogs,
+    meta: { requiresAuth: true, roles: ['admin'] }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: { requiresAuth: true, roles: ['admin'] }
   },
   {
     path: '/:pathMatch(.*)*',

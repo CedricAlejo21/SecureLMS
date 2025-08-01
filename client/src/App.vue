@@ -104,28 +104,24 @@ const roleClasses = {
 }
 
 const navigation = computed(() => {
-  const baseNav = [
-    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon }
-  ]
-  
   if (authStore.user?.role === 'admin') {
     return [
-      ...baseNav,
+      { name: 'Dashboard', href: '/admin', icon: HomeIcon },
       { name: 'Users', href: '/users', icon: UsersIcon },
       { name: 'Courses', href: '/courses', icon: BookOpenIcon },
-      { name: 'Audit Logs', href: '/audit', icon: DocumentTextIcon },
+      { name: 'Audit Logs', href: '/audit-logs', icon: DocumentTextIcon },
       { name: 'Settings', href: '/settings', icon: CogIcon }
     ]
   } else if (authStore.user?.role === 'instructor') {
     return [
-      ...baseNav,
+      { name: 'Dashboard', href: '/instructor', icon: HomeIcon },
       { name: 'My Courses', href: '/courses', icon: BookOpenIcon },
       { name: 'Assignments', href: '/assignments', icon: DocumentTextIcon },
       { name: 'Grades', href: '/grades', icon: ChartBarIcon }
     ]
   } else {
     return [
-      ...baseNav,
+      { name: 'Dashboard', href: '/student', icon: HomeIcon },
       { name: 'My Courses', href: '/courses', icon: BookOpenIcon },
       { name: 'Assignments', href: '/assignments', icon: DocumentTextIcon },
       { name: 'Grades', href: '/grades', icon: ChartBarIcon }
