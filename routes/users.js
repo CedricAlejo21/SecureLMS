@@ -49,10 +49,6 @@ router.get('/students/stats', auth, async (req, res) => {
   try {
     const userId = req.user.userId;
     
-    console.log('=== STUDENT STATS DEBUG ===');
-    console.log('User ID:', userId);
-    console.log('User role:', req.user.role);
-    
     // Only students can access this endpoint for their own stats
     if (req.user.role !== 'student') {
       return res.status(403).json({ message: 'Access denied. Students only.' });
@@ -74,10 +70,6 @@ router.get('/students/stats', auth, async (req, res) => {
     const grades = await Grade.find({ student: userId })
       .populate('assignment', 'maxScore');
     
-    console.log('Enrolled courses:', enrolledCourses);
-    console.log('Total assignments:', totalAssignments);
-    console.log('Student grades found:', grades.length);
-    
     // Calculate statistics
     const completedAssignments = grades.length;
     const pendingAssignments = Math.max(0, totalAssignments - completedAssignments);
@@ -96,8 +88,6 @@ router.get('/students/stats', auth, async (req, res) => {
       completedAssignments,
       averageGrade
     };
-    
-    console.log('Calculated stats:', stats);
     
     await AuditLog.log({
       user: userId,

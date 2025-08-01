@@ -11,11 +11,6 @@ const router = express.Router();
 // Get all assignments (role-based filtering)
 router.get('/', auth, async (req, res) => {
   try {
-    console.log('=== ASSIGNMENTS API DEBUG ===');
-    console.log('Request user:', req.user);
-    console.log('User ID:', req.user.userId);
-    console.log('User role:', req.user.role);
-    
     let assignments = [];
     
     if (req.user.role === 'instructor') {
@@ -26,7 +21,6 @@ router.get('/', auth, async (req, res) => {
       });
       
       const courseIds = instructorCourses.map(course => course._id);
-      console.log('Instructor courses found:', courseIds.length);
       
       assignments = await Assignment.find({ course: { $in: courseIds } })
         .populate('course', 'title instructor')
@@ -47,7 +41,6 @@ router.get('/', auth, async (req, res) => {
       });
       
       const courseIds = enrolledCourses.map(course => course._id);
-      console.log('Student enrolled courses found:', courseIds.length);
       
       assignments = await Assignment.find({ course: { $in: courseIds } })
         .populate('course', 'title instructor')
@@ -74,17 +67,6 @@ router.get('/', auth, async (req, res) => {
         .sort({ dueDate: 1 });
     }
 
-    console.log('=== ASSIGNMENTS QUERY RESULTS ===');
-    console.log('Number of assignments found:', assignments.length);
-    assignments.forEach((assignment, index) => {
-      console.log(`Assignment ${index + 1}:`, {
-        id: assignment._id,
-        title: assignment.title,
-        course: assignment.course?.title,
-        dueDate: assignment.dueDate
-      });
-    });
-
     await AuditLog.log({
       user: req.user.userId,
       action: 'VIEW_ASSIGNMENTS',
@@ -110,28 +92,19 @@ router.get('/course/:courseId', auth, async (req, res) => {
   try {
     const { courseId } = req.params;
     
-    console.log('=== GET ASSIGNMENTS FOR COURSE DEBUG ===');
-    console.log('Course ID:', courseId);
-    console.log('User:', req.user.userId, req.user.role);
-    
     // Check if user has access to this course
     const course = await Course.findById(courseId);
     if (!course) {
-      console.log('Course not found');
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    console.log('Course found:', course.title);
-
     // Students can only see assignments for courses they're enrolled in
     if (req.user.role === 'student' && !course.students.includes(req.user.userId)) {
-      console.log('Student not enrolled in course');
       return res.status(403).json({ message: 'Access denied' });
     }
 
     // Instructors can only see assignments for their courses
     if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId.toString()) {
-      console.log('Instructor does not own this course');
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -145,16 +118,6 @@ router.get('/course/:courseId', auth, async (req, res) => {
         }
       })
       .sort({ dueDate: 1 });
-
-    console.log('Assignments found:', assignments.length);
-    assignments.forEach((assignment, index) => {
-      console.log(`Assignment ${index + 1}:`, {
-        id: assignment._id,
-        title: assignment.title,
-        maxScore: assignment.maxScore,
-        dueDate: assignment.dueDate
-      });
-    });
 
     await AuditLog.log({
       user: req.user.userId,
@@ -176,10 +139,6 @@ router.get('/course/:courseId', auth, async (req, res) => {
 // Get single assignment by ID
 router.get('/:id', auth, async (req, res) => {
   try {
-    console.log('=== GET SINGLE ASSIGNMENT DEBUG ===');
-    console.log('Assignment ID:', req.params.id);
-    console.log('User:', req.user.userId, req.user.role);
-    
     const assignment = await Assignment.findById(req.params.id)
       .populate('course', 'title instructor')
       .populate({
@@ -192,12 +151,8 @@ router.get('/:id', auth, async (req, res) => {
       .populate('submissions.student', 'firstName lastName email');
     
     if (!assignment) {
-      console.log('Assignment not found');
       return res.status(404).json({ message: 'Assignment not found' });
     }
-    
-    console.log('Assignment found:', assignment.title);
-    console.log('Course instructor:', assignment.course?.instructor?._id);
     
     // Check permissions - students can view assignments from their enrolled courses
     if (req.user.role === 'student') {
@@ -208,13 +163,11 @@ router.get('/:id', auth, async (req, res) => {
       );
       
       if (!isEnrolled) {
-        console.log('Student not enrolled in course');
         return res.status(403).json({ message: 'Access denied' });
       }
     } else if (req.user.role === 'instructor') {
       // For instructors, check if they own the course
       if (assignment.course.instructor.toString() !== req.user.userId.toString()) {
-        console.log('Instructor does not own this course');
         return res.status(403).json({ message: 'Access denied' });
       }
     }
@@ -232,7 +185,6 @@ router.get('/:id', auth, async (req, res) => {
       success: true
     });
     
-    console.log('Assignment access granted');
     res.json(assignment);
   } catch (error) {
     console.error('Error fetching assignment:', error);
@@ -285,24 +237,10 @@ router.post('/', auth, authorize('instructor', 'admin'), [
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    console.log('=== ASSIGNMENT CREATION DEBUG ===');
-    console.log('Request user:', req.user);
-    console.log('User ID:', req.user.userId);
-    console.log('User ID type:', typeof req.user.userId);
-    console.log('Course found:', courseDoc.title);
-    console.log('Course instructor:', courseDoc.instructor);
-    console.log('Course instructor type:', typeof courseDoc.instructor);
-    console.log('Course instructor toString:', courseDoc.instructor.toString());
-    console.log('User ID toString:', req.user.userId.toString());
-    console.log('Are they equal?', courseDoc.instructor.toString() === req.user.userId.toString());
-
     if (req.user.role === 'instructor' && courseDoc.instructor.toString() !== req.user.userId.toString()) {
-      console.log('❌ Access denied - instructor mismatch');
       return res.status(403).json({ message: 'Access denied' });
     }
     
-    console.log('✅ Access granted - creating assignment');
-
     const assignment = new Assignment({
       title,
       description,
@@ -364,14 +302,8 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
     .withMessage('Max points must be between 1 and 1000')
 ], async (req, res) => {
   try {
-    console.log('=== ASSIGNMENT UPDATE DEBUG ===');
-    console.log('Request user:', req.user);
-    console.log('Assignment ID:', req.params.id);
-    console.log('Update data:', req.body);
-    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('Validation errors:', errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -379,27 +311,11 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
       .populate('course', 'instructor');
 
     if (!assignment) {
-      console.log('Assignment not found');
       return res.status(404).json({ message: 'Assignment not found' });
     }
 
-    console.log('Assignment found:', {
-      id: assignment._id,
-      title: assignment.title,
-      courseInstructor: assignment.course.instructor
-    });
-
     // Check permissions
-    console.log('Permission check:');
-    console.log('User role:', req.user.role);
-    console.log('User ID:', req.user.userId);
-    console.log('User ID (string):', req.user.userId.toString());
-    console.log('Course instructor ID:', assignment.course.instructor);
-    console.log('Course instructor ID (string):', assignment.course.instructor.toString());
-    console.log('IDs match:', assignment.course.instructor.toString() === req.user.userId.toString());
-    
     if (req.user.role === 'instructor' && assignment.course.instructor.toString() !== req.user.userId.toString()) {
-      console.log('Access denied - instructor does not own this assignment');
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -409,8 +325,6 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
     if (req.body.dueDate) updateData.dueDate = new Date(req.body.dueDate);
     if (req.body.maxPoints) updateData.maxScore = req.body.maxPoints; // Map maxPoints from API to maxScore in model
     updateData.updatedAt = Date.now();
-
-    console.log('Update data prepared:', updateData);
 
     const updatedAssignment = await Assignment.findByIdAndUpdate(
       req.params.id,
@@ -424,8 +338,6 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
         select: '_id firstName lastName email'
       }
     });
-
-    console.log('Assignment updated successfully');
 
     await AuditLog.log({
       user: req.user.userId,
@@ -450,39 +362,18 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
 // Delete assignment (Instructor and Admin only)
 router.delete('/:id', auth, authorize('instructor', 'admin'), async (req, res) => {
   try {
-    console.log('=== ASSIGNMENT DELETE DEBUG ===');
-    console.log('Request user:', req.user);
-    console.log('Assignment ID:', req.params.id);
-    
     const assignment = await Assignment.findById(req.params.id)
       .populate('course', 'instructor');
 
     if (!assignment) {
-      console.log('Assignment not found');
       return res.status(404).json({ message: 'Assignment not found' });
     }
 
-    console.log('Assignment found:', {
-      id: assignment._id,
-      title: assignment.title,
-      courseInstructor: assignment.course.instructor
-    });
-
     // Check permissions
-    console.log('Permission check:');
-    console.log('User role:', req.user.role);
-    console.log('User ID:', req.user.userId);
-    console.log('User ID (string):', req.user.userId.toString());
-    console.log('Course instructor ID:', assignment.course.instructor);
-    console.log('Course instructor ID (string):', assignment.course.instructor.toString());
-    console.log('IDs match:', assignment.course.instructor.toString() === req.user.userId.toString());
-    
     if (req.user.role === 'instructor' && assignment.course.instructor.toString() !== req.user.userId.toString()) {
-      console.log('Access denied - instructor does not own this assignment');
       return res.status(403).json({ message: 'Access denied' });
     }
 
-    console.log('Permission check passed, deleting assignment');
     await Assignment.findByIdAndDelete(req.params.id);
 
     await AuditLog.log({
@@ -498,7 +389,6 @@ router.delete('/:id', auth, authorize('instructor', 'admin'), async (req, res) =
       success: true
     });
 
-    console.log('Assignment deleted successfully');
     res.json({ message: 'Assignment deleted successfully' });
   } catch (error) {
     console.error('Delete assignment error:', error);

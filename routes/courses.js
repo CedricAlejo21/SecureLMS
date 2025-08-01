@@ -12,45 +12,19 @@ const router = express.Router();
 // Get all courses (with role-based filtering)
 router.get('/', auth, async (req, res) => {
   try {
-    console.log('=== COURSES API DEBUG ===');
-    console.log('Request user:', req.user);
-    console.log('User ID:', req.user.userId);
-    console.log('User role:', req.user.role);
-    
     let query = { isActive: true };
     
     // Instructors can see their own courses
     if (req.user.role === 'instructor') {
       query['instructor'] = req.user.userId;
-      console.log('Instructor detected - filtering by instructor ID:', req.user.userId);
     } else {
-      console.log('Non-instructor user - showing all active courses');
     }
     
-    console.log('Database query:', query);
-    
-    // Students and admins can see all active courses
-    // Frontend will handle filtering for enrolled vs available courses
-
     const courses = await Course.find(query)
       .populate('instructor', 'firstName lastName email')
       .populate('students', 'firstName lastName email')
       .populate('assignments', 'title dueDate maxScore')
       .sort({ startDate: -1 });
-
-    console.log('=== QUERY RESULTS ===');
-    console.log('Number of courses found:', courses.length);
-    console.log('Course details:');
-    courses.forEach((course, index) => {
-      console.log(`Course ${index + 1}:`, {
-        id: course._id,
-        title: course.title,
-        instructor: course.instructor,
-        instructorId: course.instructor._id,
-        studentsCount: course.students.length,
-        isActive: course.isActive
-      });
-    });
 
     res.json(courses);
   } catch (error) {
@@ -102,7 +76,6 @@ router.get('/:id', auth, async (req, res) => {
     
     // Check if user is admin
     if (req.user.role === 'admin') {
-      console.log('✅ Admin access granted for course:', req.params.id);
     }
     
     // Check if user is the instructor
@@ -122,14 +95,6 @@ router.get('/:id', auth, async (req, res) => {
 
     if (!hasAccess) {
       // Log detailed information for debugging
-      console.log('❌ Access denied for user:', userIdString, 'Role:', req.user.role);
-      console.log('Course instructor:', instructorIdString);
-      console.log('Course students (raw):', course.students);
-      console.log('Course students (IDs):', course.students.map(s => s._id ? s._id.toString() : s.toString()));
-      console.log('User trying to access:', userIdString);
-      console.log('Is instructor?', isInstructor);
-      console.log('Is enrolled student?', isEnrolledStudent);
-      
       await AuditLog.log({
         user: req.user.userId,
         action: 'UNAUTHORIZED_ACCESS_ATTEMPT',
@@ -152,8 +117,6 @@ router.get('/:id', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied. You are not enrolled in this course.' });
     }
     
-    console.log('✅ Access granted for user:', userIdString, 'Role:', req.user.role);
-
     res.json(course);
   } catch (error) {
     console.error('Get course error:', error);

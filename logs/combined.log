@@ -1117,3 +1117,15 @@
 {"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/students/stats","service":"secure-lms","timestamp":"2025-08-01T15:54:34.466Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
 {"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-01T15:54:34.469Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
 {"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/assignments/student/upcoming","service":"secure-lms","timestamp":"2025-08-01T15:54:34.470Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:00:57.166Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:00:57.199Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:01:01.343Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:01:01.365Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:01:37.944Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:01:37.973Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:01:43.147Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:01:43.177Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:02:09.455Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:02:09.476Z"}
+{"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:05:02.142Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:05:02.171Z"}
