@@ -9,28 +9,107 @@ const roleAuth = require('../middleware/roleAuth');
 
 const router = express.Router();
 
-// Register new user
+// Register user with comprehensive security validation
 router.post('/register', [
+  // Username validation with security requirements
   body('username')
     .isLength({ min: 3, max: 30 })
     .matches(/^[a-zA-Z0-9_]+$/)
-    .withMessage('Username must be 3-30 characters and contain only letters, numbers, and underscores'),
+    .withMessage('Username must be 3-30 characters and contain only letters, numbers, and underscores')
+    .custom(async (value) => {
+      // Check for reserved usernames
+      const reservedUsernames = ['admin', 'administrator', 'root', 'system', 'api', 'test', 'demo', 'guest'];
+      if (reservedUsernames.includes(value.toLowerCase())) {
+        throw new Error('Username is reserved and cannot be used');
+      }
+      return true;
+    }),
+
+  // Email validation with security requirements
   body('email')
     .isEmail()
     .normalizeEmail()
-    .withMessage('Please provide a valid email'),
+    .withMessage('Please provide a valid email')
+    .custom(async (value) => {
+      // Check for disposable email domains (basic list)
+      const disposableDomains = ['10minutemail.com', 'tempmail.org', 'guerrillamail.com', 'mailinator.com'];
+      const domain = value.split('@')[1];
+      if (disposableDomains.includes(domain)) {
+        throw new Error('Disposable email addresses are not allowed');
+      }
+      return true;
+    }),
+
+  // Enhanced password validation with comprehensive security requirements
   body('password')
-    .isLength({ min: 12 })
-    .withMessage('Password must be at least 12 characters'),
+    .isLength({ min: 12, max: 128 })
+    .withMessage('Password must be between 12-128 characters')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, 'g')
+    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)')
+    .custom((value) => {
+      // Check for common weak passwords
+      const commonPasswords = [
+        'password123!', 'Password123!', 'Admin123456!', 'Welcome123!',
+        'Qwerty123456!', '123456789!', 'Password1!', 'Admin1234!'
+      ];
+      if (commonPasswords.includes(value)) {
+        throw new Error('Password is too common. Please choose a more secure password');
+      }
+
+      // Check for sequential characters
+      if (/123456|abcdef|qwerty/i.test(value)) {
+        throw new Error('Password cannot contain sequential characters');
+      }
+
+      return true;
+    }),
+
+  // Confirm password validation
+  body('confirmPassword')
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Password confirmation does not match');
+      }
+      return true;
+    }),
+
+  // Name validation with security sanitization
   body('firstName')
     .isLength({ min: 1, max: 50 })
-    .withMessage('First name is required and must be less than 50 characters'),
+    .matches(/^[a-zA-Z\s'-]+$/)
+    .withMessage('First name must be 1-50 characters and contain only letters, spaces, hyphens, and apostrophes')
+    .trim()
+    .escape(),
+
   body('lastName')
     .isLength({ min: 1, max: 50 })
-    .withMessage('Last name is required and must be less than 50 characters'),
+    .matches(/^[a-zA-Z\s'-]+$/)
+    .withMessage('Last name must be 1-50 characters and contain only letters, spaces, hyphens, and apostrophes')
+    .trim()
+    .escape(),
+
+  // Role validation with security restrictions
   body('role')
     .isIn(['student', 'instructor'])
     .withMessage('Role must be either student or instructor')
+    .custom((value) => {
+      // Additional role-based restrictions can be added here
+      return true;
+    }),
+
+  // Terms of service acceptance
+  body('acceptTerms')
+    .isBoolean()
+    .custom((value) => value === true)
+    .withMessage('You must accept the terms of service'),
+
+  // Privacy policy acceptance
+  body('acceptPrivacy')
+    .optional()
+    .isBoolean()
+    .custom((value) => value === true)
+    .withMessage('You must accept the privacy policy')
+
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -90,7 +169,13 @@ router.post('/register', [
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ message: 'Server error during registration' });
+    if (error.name === 'ValidationError') {
+      res.status(400).json({ message: 'Validation failed', details: error.message });
+    } else if (error.code === 11000) {
+      res.status(400).json({ message: 'Username or email already exists' });
+    } else {
+      res.status(500).json({ message: 'Server error during registration', details: error.message });
+    }
   }
 });
 

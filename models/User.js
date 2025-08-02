@@ -86,21 +86,33 @@ userSchema.virtual('isLocked').get(function() {
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
-  // Add current password to history before changing
-  if (this.passwordHistory.length >= 5) {
-    this.passwordHistory.shift(); // Remove oldest password
-  }
-  
+  // Add OLD hashed password to history before changing (only for existing users)
   if (this.isModified('password') && !this.isNew) {
-    this.passwordHistory.push({
-      password: this.password,
-      changedAt: new Date()
-    });
+    // Get the current hashed password from database before it gets replaced
+    const currentUser = await this.constructor.findById(this._id).select('+password');
+    
+    if (currentUser && currentUser.password) {
+      // Manage password history size
+      if (this.passwordHistory.length >= 5) {
+        this.passwordHistory.shift(); // Remove oldest password
+      }
+      
+      // Add the OLD hashed password to history
+      this.passwordHistory.push({
+        password: currentUser.password,
+        changedAt: new Date()
+      });
+    }
   }
   
   // Hash new password
   this.password = await bcrypt.hash(this.password, 12);
-  this.passwordChangedAt = Date.now();
+  
+  // Only set passwordChangedAt for existing users (not new registrations)
+  if (!this.isNew) {
+    this.passwordChangedAt = Date.now();
+  }
+  
   next();
 });
 
