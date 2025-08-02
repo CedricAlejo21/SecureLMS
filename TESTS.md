@@ -38,9 +38,9 @@ tests/
 - [x] **1.1.5** Protected route rejection without token
 
 #### 1.2 Basic CRUD Operations (tests/integration/02-basic-functionality/)
-- [ ] **1.2.1** Course creation by instructor
-- [ ] **1.2.2** Course listing and retrieval
-- [ ] **1.2.3** Student enrollment in courses
+- [x] **1.2.1** Course creation by instructor
+- [x] **1.2.2** Course listing and retrieval
+- [x] **1.2.3** Student enrollment in courses
 - [ ] **1.2.4** Assignment creation by instructor
 - [ ] **1.2.5** Assignment submission by student
 - [ ] **1.2.6** Grade assignment by instructor
@@ -99,13 +99,6 @@ Based on CHECKLIST.md sections 2.4.x:
 - [ ] **3.2** Rate limiting enforcement (Create dedicated rate limiting test suite)
 - [ ] **3.3** Database connection failure scenarios
 - [ ] **3.4** Invalid JWT token scenarios
-- [ ] **3.5** Concurrent operation handling
-
-### Phase 4: Unit Tests (Optional - as needed)
-- [ ] **4.1** Model validation logic
-- [ ] **4.2** Middleware functionality
-- [ ] **4.3** Utility function testing
-- [ ] **4.4** Business logic edge cases
 
 ## Test Environment Setup
 

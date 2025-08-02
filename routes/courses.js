@@ -321,7 +321,7 @@ router.post('/:id/unenroll', auth, async (req, res) => {
         return res.status(403).json({ message: 'Students can only unenroll themselves' });
       }
       
-      if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId) {
+      if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId.toString()) {
         return res.status(403).json({ message: 'Access denied. You can only manage your own courses.' });
       }
       

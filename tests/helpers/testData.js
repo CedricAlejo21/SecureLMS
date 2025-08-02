@@ -80,7 +80,10 @@ const createTestCourse = async (instructorId, overrides = {}) => {
     title: `Test Course ${Date.now()}`,
     description: 'A test course for automated testing',
     instructor: instructorId,
-    enrolledStudents: [],
+    startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow
+    endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // End in 90 days
+    maxStudents: 30,
+    students: [], // Use 'students' instead of 'enrolledStudents'
     isActive: true
   };
 

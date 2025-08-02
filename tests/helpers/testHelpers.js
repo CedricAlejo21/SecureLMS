@@ -105,7 +105,7 @@ const extractErrorMessages = (response) => {
 const assertAuditLog = async (action, userId = null, details = {}) => {
   const log = await AuditLog.findOne({ action }).sort({ timestamp: -1 });
   expect(log).toBeTruthy();
-  if (userId) expect(log.userId?.toString()).toBe(userId.toString());
+  if (userId) expect(log.user?.toString()).toBe(userId.toString());
   if (Object.keys(details).length > 0) {
     expect(log.details).toMatchObject(details);
   }

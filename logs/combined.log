@@ -1129,3 +1129,292 @@
 {"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:02:09.476Z"}
 {"level":"info","message":"Server running on port 5000","service":"secure-lms","timestamp":"2025-08-01T16:05:02.142Z"}
 {"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-01T16:05:02.171Z"}
+{"level":"info","message":"Server running on port 3001","service":"secure-lms","timestamp":"2025-08-02T02:33:58.359Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T02:33:58.369Z"}
+{"level":"info","message":"Server running on port 3001","service":"secure-lms","timestamp":"2025-08-02T02:41:53.074Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T02:41:53.082Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:29:01.362Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:30:26.974Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:30:28.197Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:30:28.223Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:30:28.351Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:30:28.403Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:30:28.563Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:30:28.962Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:30:28.993Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:36:06.518Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:36:07.665Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:36:07.690Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:36:07.706Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:36:07.830Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:36:08.193Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:36:09.680Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:36:09.710Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:36:10.014Z"}
+{"level":"info","message":"Server running on port 3001","service":"secure-lms","timestamp":"2025-08-02T11:38:11.122Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:38:11.130Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:38:12.051Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:40:58.704Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:40:59.871Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:41:00.258Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:41:00.297Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:41:00.330Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:41:00.625Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:41:00.926Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:41:00.938Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:41:02.379Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:41:02.397Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:41:02.699Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:45:52.310Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:45:53.471Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:45:53.854Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:45:53.894Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:45:53.910Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:45:54.201Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:45:54.496Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:45:54.796Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:45:55.091Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:45:56.528Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:45:56.548Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:45:56.853Z"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:49:49.305Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:49:50.510Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:49:50.901Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:49:50.936Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:49:50.952Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:49:51.245Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:49:51.557Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:49:51.856Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:49:52.150Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:49:53.641Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:49:53.661Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:49:53.965Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T11:56:20.379Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:56:21.375Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:56:21.802Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:56:21.827Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:56:21.841Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T11:56:22.131Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:56:22.422Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:56:22.722Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:56:23.028Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:56:23.594Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T11:56:24.163Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:56:24.744Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:56:25.047Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:56:25.066Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:56:25.084Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T11:56:25.385Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:05:31.958Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:05:32.924Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:05:33.370Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:05:33.397Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:05:33.410Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:05:33.700Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:05:34.004Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:05:34.299Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:05:34.595Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:05:35.166Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:05:35.736Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:05:36.301Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:05:36.614Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:05:36.634Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:05:36.651Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:05:36.952Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:06:27.302Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:06:28.274Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:06:28.700Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:06:28.725Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:06:28.740Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/register","service":"secure-lms","timestamp":"2025-08-02T12:06:29.030Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:06:29.324Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:06:29.622Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:06:29.918Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:06:30.487Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/auth/login","service":"secure-lms","timestamp":"2025-08-02T12:06:31.055Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:06:31.623Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:06:31.921Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:06:31.939Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:06:31.960Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/users/profile","service":"secure-lms","timestamp":"2025-08-02T12:06:32.263Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:25:08.009Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:09.495Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:09.873Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:10.175Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:10.477Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:10.772Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:11.066Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:11.357Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:11.649Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:11.942Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:12.250Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:12.271Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:12.299Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:12.591Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:25:12.887Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:26:37.294Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:26:40.275Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:26:41.722Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:26:42.025Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/507f1f77bcf86cd799439011","service":"secure-lms","timestamp":"2025-08-02T12:26:44.844Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/invalid-id","service":"secure-lms","timestamp":"2025-08-02T12:26:45.160Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:27:17.115Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:18.969Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:19.569Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:20.147Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:20.186Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:20.781Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:27:21.365Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:27:21.676Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:27:21.973Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042ade63d9ed39f436ae","service":"secure-lms","timestamp":"2025-08-02T12:27:22.269Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042ade63d9ed39f436bd","service":"secure-lms","timestamp":"2025-08-02T12:27:22.846Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042bde63d9ed39f436ce","service":"secure-lms","timestamp":"2025-08-02T12:27:23.421Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042bde63d9ed39f436dd","service":"secure-lms","timestamp":"2025-08-02T12:27:23.997Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042cde63d9ed39f436ee","service":"secure-lms","timestamp":"2025-08-02T12:27:24.570Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/507f1f77bcf86cd799439011","service":"secure-lms","timestamp":"2025-08-02T12:27:24.870Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/invalid-id","service":"secure-lms","timestamp":"2025-08-02T12:27:25.164Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042dde63d9ed39f43710","service":"secure-lms","timestamp":"2025-08-02T12:27:25.493Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:25.797Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:27:25.807Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042dde63d9ed39f4371f","service":"secure-lms","timestamp":"2025-08-02T12:27:25.818Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:27:26.111Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e042ede63d9ed39f4372c","service":"secure-lms","timestamp":"2025-08-02T12:27:26.121Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:29:02.164Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e048f4f35a21187f61946/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:03.932Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04904f35a21187f61959/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:04.537Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04914f35a21187f6196b/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:05.122Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04914f35a21187f6196b/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:05.139Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04914f35a21187f6197e/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:05.997Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:06.292Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04924f35a21187f61999/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:06.874Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04934f35a21187f619ac/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:07.464Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04944f35a21187f619bd/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:08.325Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04954f35a21187f619ce/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:09.175Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04954f35a21187f619dd/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:09.756Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04964f35a21187f619eb/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:10.348Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:10.667Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04974f35a21187f61a08/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:11.258Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04974f35a21187f61a17/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:11.851Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04984f35a21187f61a24/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:12.148Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04984f35a21187f61a2f/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:29:12.459Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04984f35a21187f61a3a/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:12.756Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04994f35a21187f61a49/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:13.605Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e04994f35a21187f61a49/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:13.610Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e049a4f35a21187f61a5f/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:14.208Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/invalid-id/enroll","service":"secure-lms","timestamp":"2025-08-02T12:29:14.512Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:32:16.643Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0552d9f3713b04d70572/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:18.220Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0552d9f3713b04d70585/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:18.823Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0553d9f3713b04d70597/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:19.414Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0553d9f3713b04d70597/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:19.431Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0554d9f3713b04d705aa/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:20.313Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:20.610Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0555d9f3713b04d705c5/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:21.201Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0555d9f3713b04d705d8/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:21.786Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0556d9f3713b04d705e9/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:22.636Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0557d9f3713b04d705fa/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:23.490Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0558d9f3713b04d70609/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:24.061Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0558d9f3713b04d70617/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:24.659Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:24.989Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0559d9f3713b04d70634/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:25.580Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055ad9f3713b04d70643/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:26.160Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055ad9f3713b04d70650/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:26.460Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055ad9f3713b04d7065b/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:32:26.773Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055bd9f3713b04d70666/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:27.070Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055bd9f3713b04d70675/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:27.937Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055bd9f3713b04d70675/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:27.943Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e055cd9f3713b04d7068b/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:28.535Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/invalid-id/enroll","service":"secure-lms","timestamp":"2025-08-02T12:32:28.836Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:34:46.828Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e05e808501e3895a05ad3/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:34:48.622Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:36:12.050Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e063d74316959fd4bb25b/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:36:13.805Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:37:21.433Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0683fe09dc6783505819/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:23.160Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0683fe09dc678350582c/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:23.763Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0684fe09dc678350583e/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:24.346Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0684fe09dc678350583e/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:24.363Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0684fe09dc6783505851/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:25.229Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:25.523Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0686fe09dc678350586c/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:26.106Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0686fe09dc678350587f/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:26.702Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0687fe09dc6783505894/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:27.564Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0688fe09dc67835058a5/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:28.423Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0689fe09dc67835058b4/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:29.044Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0689fe09dc67835058c2/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:29.639Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:29.947Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068afe09dc67835058df/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:30.535Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068bfe09dc67835058ee/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:31.140Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068bfe09dc67835058fb/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:31.451Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068bfe09dc6783505906/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:37:31.765Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068cfe09dc6783505911/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:32.060Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068cfe09dc6783505920/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:32.927Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068cfe09dc6783505920/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:32.937Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e068dfe09dc6783505937/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:33.528Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/invalid-id/enroll","service":"secure-lms","timestamp":"2025-08-02T12:37:33.830Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:48:29.063Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e091e5dd0eacf5e506e2f/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:30.865Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e091f5dd0eacf5e506e42/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:31.469Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09205dd0eacf5e506e54/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:32.053Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09205dd0eacf5e506e54/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:32.068Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09205dd0eacf5e506e67/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:32.918Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:33.226Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09215dd0eacf5e506e82/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:33.813Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09225dd0eacf5e506e95/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:34.399Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09235dd0eacf5e506eaa/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:35.266Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09245dd0eacf5e506ebb/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:36.116Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09245dd0eacf5e506eca/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:36.696Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09255dd0eacf5e506ed8/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:37.271Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:37.601Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09265dd0eacf5e506ef5/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:38.182Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09265dd0eacf5e506f04/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:38.782Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09275dd0eacf5e506f11/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:39.080Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09275dd0eacf5e506f1c/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:48:39.390Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09275dd0eacf5e506f27/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:39.685Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e09285dd0eacf5e506f34/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:40.254Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/invalid-id/enroll","service":"secure-lms","timestamp":"2025-08-02T12:48:40.553Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:58:23.216Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b70b8a5ca19d03df821/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:25.000Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b71b8a5ca19d03df834/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:25.606Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b72b8a5ca19d03df846/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:26.193Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b72b8a5ca19d03df846/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:26.209Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b72b8a5ca19d03df859/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:27.070Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:27.382Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b73b8a5ca19d03df874/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:27.955Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b74b8a5ca19d03df887/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:28.544Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b75b8a5ca19d03df89c/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:29.396Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b76b8a5ca19d03df8ad/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:30.244Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b76b8a5ca19d03df8bc/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:30.822Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b77b8a5ca19d03df8ca/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:31.412Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/507f1f77bcf86cd799439011/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:31.726Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b78b8a5ca19d03df8e7/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:32.325Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b78b8a5ca19d03df8f6/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:32.897Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b79b8a5ca19d03df903/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:33.194Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b79b8a5ca19d03df90e/unenroll","service":"secure-lms","timestamp":"2025-08-02T12:58:33.503Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b79b8a5ca19d03df919/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:33.799Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/688e0b7ab8a5ca19d03df926/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:34.367Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"POST /api/courses/invalid-id/enroll","service":"secure-lms","timestamp":"2025-08-02T12:58:34.668Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:58:35.261Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:37.087Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:37.676Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:38.251Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:38.272Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:38.849Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:58:39.425Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:58:39.726Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:58:40.019Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b80b7a45c1b2e46abf9","service":"secure-lms","timestamp":"2025-08-02T12:58:40.318Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b80b7a45c1b2e46ac08","service":"secure-lms","timestamp":"2025-08-02T12:58:40.899Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b81b7a45c1b2e46ac19","service":"secure-lms","timestamp":"2025-08-02T12:58:41.477Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b82b7a45c1b2e46ac28","service":"secure-lms","timestamp":"2025-08-02T12:58:42.072Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b82b7a45c1b2e46ac39","service":"secure-lms","timestamp":"2025-08-02T12:58:42.654Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/507f1f77bcf86cd799439011","service":"secure-lms","timestamp":"2025-08-02T12:58:42.952Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/invalid-id","service":"secure-lms","timestamp":"2025-08-02T12:58:43.246Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b83b7a45c1b2e46ac5b","service":"secure-lms","timestamp":"2025-08-02T12:58:43.585Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:43.890Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/student","service":"secure-lms","timestamp":"2025-08-02T12:58:43.901Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b83b7a45c1b2e46ac6a","service":"secure-lms","timestamp":"2025-08-02T12:58:43.913Z"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses","service":"secure-lms","timestamp":"2025-08-02T12:58:44.206Z","userAgent":"Jest Test Agent"}
+{"ip":"::ffff:127.0.0.1","level":"info","message":"GET /api/courses/688e0b84b7a45c1b2e46ac77","service":"secure-lms","timestamp":"2025-08-02T12:58:44.215Z","userAgent":"Jest Test Agent"}
+{"level":"info","message":"Connected to MongoDB","service":"secure-lms","timestamp":"2025-08-02T12:58:44.746Z"}
