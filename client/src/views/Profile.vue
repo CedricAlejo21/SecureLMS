@@ -41,23 +41,64 @@
           </div>
         </div>
 
-        <!-- Password Change Section -->
+        <!-- Password Change Form -->
         <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">Security Settings</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Change Password</h2>
           
-          <div class="space-y-4">
+          <form @submit.prevent="changePassword" class="space-y-4">
             <div>
-              <p class="text-sm text-gray-600 mb-2">
-                For security reasons, you will be automatically signed out after changing your password.
+              <label for="currentPassword" class="block text-sm font-medium text-gray-700">
+                Current Password
+              </label>
+              <input
+                type="password"
+                id="currentPassword"
+                v-model="passwordForm.currentPassword"
+                required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            
+            <div>
+              <label for="newPassword" class="block text-sm font-medium text-gray-700">
+                New Password
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                v-model="passwordForm.newPassword"
+                required
+                minlength="12"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <p class="mt-1 text-xs text-gray-500">
+                Password must be at least 12 characters long and cannot be the same as your last 5 passwords.
               </p>
+            </div>
+            
+            <div>
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
+                Confirm New Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                v-model="passwordForm.confirmPassword"
+                required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+
+            <div class="flex justify-between items-center">
               <button
-                @click="$router.push('/change-password')"
-                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                type="submit"
+                :disabled="isChangingPassword || !isPasswordFormValid"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Change Password
+                {{ isChangingPassword ? 'Changing...' : 'Change Password' }}
               </button>
             </div>
-          </div>
+          </form>
         </div>
 
         <!-- Security Information -->

@@ -229,17 +229,13 @@ router.put('/change-password', auth, [
       user: req.user.userId,
       action: 'PASSWORD_CHANGED',
       resource: '/api/users/change-password',
-      details: { timestamp: new Date(), sessionInvalidated: true },
+      details: { timestamp: new Date() },
       ipAddress: req.ip,
       userAgent: req.get('User-Agent'),
       success: true
     });
 
-    // Invalidate current session for security
-    res.json({ 
-      message: 'Password changed successfully. Please log in again with your new password.',
-      requiresReLogin: true 
-    });
+    res.json({ message: 'Password changed successfully' });
   } catch (error) {
     console.error('Change password error:', error);
     res.status(500).json({ message: 'Server error' });
