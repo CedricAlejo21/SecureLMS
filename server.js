@@ -69,8 +69,11 @@ const authLimiter = rateLimit({
   skipSuccessfulRequests: true
 });
 
-app.use(limiter);
-app.use('/api/auth', authLimiter);
+// Only apply rate limiting in production/development, not in tests
+if (process.env.NODE_ENV !== 'test') {
+  app.use(limiter);
+  app.use('/api/auth', authLimiter);
+}
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -138,6 +141,17 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
+
+// Only start server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`);
+  });
+}
+
+// Export app and rate limiters for testing
+module.exports = { 
+  app, 
+  limiter, 
+  authLimiter 
+};
