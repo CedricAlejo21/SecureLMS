@@ -4,7 +4,7 @@ const auditLogSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false // Allow null for failed login attempts with non-existent users
   },
   action: {
     type: String,

@@ -132,10 +132,11 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 
 // Method to check password minimum age (24 hours)
 userSchema.methods.canChangePassword = function() {
-  if (!this.passwordChangedAt) return true; // First time password change
+  // Use createdAt if passwordChangedAt is not set (for new users)
+  const lastChangeDate = this.passwordChangedAt || this.createdAt;
   
   const twentyFourHoursAgo = new Date(Date.now() - (24 * 60 * 60 * 1000));
-  return this.passwordChangedAt < twentyFourHoursAgo;
+  return lastChangeDate < twentyFourHoursAgo;
 };
 
 // Method to increment login attempts

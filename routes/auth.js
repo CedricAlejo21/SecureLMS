@@ -196,11 +196,14 @@ router.post('/login', [
 
     const { username, password } = req.body;
 
-    // Find user by credentials
-    const user = await User.findByCredentials(username, password);
+    // Find user first (separate from password validation)
+    const user = await User.findOne({
+      $or: [{ email: username }, { username: username }]
+    }).select('+password');
     
+    // If user doesn't exist, return generic error
     if (!user) {
-      // Log failed login attempt
+      // Log failed login attempt for non-existent user
       await AuditLog.log({
         user: null,
         action: 'LOGIN_FAILED',
@@ -215,7 +218,7 @@ router.post('/login', [
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Check if account is locked (separate check after user is found)
+    // Check if account is locked first
     if (user.isLocked) {
       await AuditLog.log({
         user: user._id,
@@ -231,6 +234,27 @@ router.post('/login', [
       return res.status(423).json({ 
         message: 'Account is temporarily locked due to multiple failed login attempts. Please try again later or contact support.' 
       });
+    }
+
+    // Validate password for existing user
+    const isPasswordCorrect = await user.correctPassword(password);
+    if (!isPasswordCorrect) {
+      // Increment failed login attempts for existing user with wrong password
+      await user.incLoginAttempts();
+      
+      // Log failed login attempt for existing user
+      await AuditLog.log({
+        user: user._id,
+        action: 'LOGIN_FAILED',
+        resource: 'Auth',
+        details: { username },
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        success: false,
+        errorMessage: 'Invalid credentials'
+      });
+      
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
 
     // Reset failed login attempts
