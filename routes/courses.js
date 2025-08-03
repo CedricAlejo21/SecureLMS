@@ -262,7 +262,7 @@ router.put('/:id', [
     }
 
     // Check permissions
-    if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId) {
+    if (req.user.role === 'instructor' && course.instructor.toString() !== req.user.userId.toString()) {
       return res.status(403).json({ message: 'Access denied. You can only update your own courses.' });
     }
 

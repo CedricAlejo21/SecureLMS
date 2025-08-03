@@ -67,12 +67,12 @@ Based on CHECKLIST.md sections 2.1.x:
 #### 2.2 Authorization/Access Control (tests/integration/03-security-features/authorization.test.js)
 Based on CHECKLIST.md sections 2.2.x:
 
-- [ ] **2.2.1** Single site-wide authorization component *(CHECKLIST 2.2.1)*
-- [ ] **2.2.2** Access controls fail securely *(CHECKLIST 2.2.2)*
-- [ ] **2.2.3** Business rule compliance enforcement *(CHECKLIST 2.2.3)*
-- [ ] **2.2.4** Role-based access control (Admin/Instructor/Student)
-- [ ] **2.2.5** Cross-role access prevention
-- [ ] **2.2.6** Resource ownership validation
+- [x] **2.2.1** Single site-wide authorization component *(CHECKLIST 2.2.1)*
+- [x] **2.2.2** Access controls fail securely *(CHECKLIST 2.2.2)*
+- [x] **2.2.3** Business rule compliance enforcement *(CHECKLIST 2.2.3)*
+- [x] **2.2.4** Role-based access control (Admin/Instructor/Student)
+- [x] **2.2.5** Cross-role access prevention
+- [x] **2.2.6** Resource ownership validation
 
 #### 2.3 Data Validation (tests/integration/03-security-features/validation.test.js)
 Based on CHECKLIST.md sections 2.3.x:
