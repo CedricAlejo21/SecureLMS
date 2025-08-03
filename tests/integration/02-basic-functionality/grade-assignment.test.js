@@ -80,7 +80,7 @@ describe('1.2.6 Grade Assignment by Instructor', () => {
 
       const gradeData = {
         grade: 90,
-        feedback: 'Admin feedback: Excellent work.'
+        feedback: 'Admin feedback - Excellent work.'
       };
 
       const response = await request(app)
