@@ -1,3 +1,24 @@
+/**
+ * Authentication Security Tests
+ * 
+ * This test suite covers the following CSSECDV checklist requirements:
+ * 
+ * PRIMARY COVERAGE (Directly Implemented):
+ * - CHECKLIST 2.1.1: Require authentication for all protected pages/resources
+ * - CHECKLIST 2.1.2: Authentication controls fail securely  
+ * - CHECKLIST 2.1.3: Only cryptographically strong hashed passwords stored
+ * - CHECKLIST 2.1.4: Generic authentication failure responses
+ * 
+ * ADDITIONAL COVERAGE (Implemented as part of comprehensive security):
+ * - CHECKLIST 2.1.5: Password complexity requirements enforcement
+ * - CHECKLIST 2.1.6: Password length requirements enforcement (12+ characters)
+ * - CHECKLIST 2.1.8: Account lockout after failed attempts (5 attempts, 15-minute lockout)
+ * - CHECKLIST 2.1.10: Password re-use prevention (5 password history)
+ * - CHECKLIST 2.1.11: Password age enforcement (24-hour minimum age)
+ * - CHECKLIST 2.1.12: Last login attempt reporting (via audit logs)
+ * - CHECKLIST 2.1.13: Re-authentication for critical operations
+ */
+
 const request = require('supertest');
 const bcrypt = require('bcryptjs');
 const { app } = require('../../../server');
@@ -6,7 +27,7 @@ const { resetCounter, createTestUser, getValidRegistrationData } = require('../.
 const User = require('../../../models/User');
 const AuditLog = require('../../../models/AuditLog');
 
-describe('Authentication Security Controls', () => {
+describe('Authentication Security Controls (CSSECDV Checklist 2.1.x)', () => {
   beforeAll(async () => {
     await connectDB();
   });
@@ -20,7 +41,7 @@ describe('Authentication Security Controls', () => {
     resetCounter();
   });
 
-  describe('2.1.1 Require authentication for all protected pages/resources', () => {
+  describe('2.1.1 Require authentication for all protected pages/resources (CHECKLIST 2.1.1)', () => {
     const protectedEndpoints = [
       { method: 'get', path: '/api/users/profile', description: 'User profile' },
       { method: 'get', path: '/api/courses', description: 'Courses listing' },
@@ -82,8 +103,8 @@ describe('Authentication Security Controls', () => {
     });
   });
 
-  describe('2.1.2 Authentication controls fail securely', () => {
-    test('should implement account lockout after multiple failed attempts', async () => {
+  describe('2.1.2 Authentication controls fail securely (CHECKLIST 2.1.2)', () => {
+    test('should implement account lockout after multiple failed attempts (CHECKLIST 2.1.8)', async () => {
       const user = await createTestUser({
         username: 'lockoutuser',
         email: 'lockout@test.com',
@@ -127,7 +148,7 @@ describe('Authentication Security Controls', () => {
       expect(failedLogs.length).toBeGreaterThanOrEqual(5);
     });
 
-    test('should not reveal user existence in authentication failures', async () => {
+    test('should not reveal user existence in authentication failures (CHECKLIST 2.1.4)', async () => {
       // Test with non-existent user
       const nonExistentResponse = await request(app)
         .post('/api/auth/login')
@@ -159,7 +180,7 @@ describe('Authentication Security Controls', () => {
       expect(wrongPasswordResponse.body.message).toBe('Invalid username or password');
     });
 
-    test('should enforce re-authentication for sensitive operations', async () => {
+    test('should enforce re-authentication for sensitive operations (CHECKLIST 2.1.13)', async () => {
       const user = await createTestUser({
         username: 'reauthuser',
         email: 'reauth@test.com',
@@ -191,7 +212,7 @@ describe('Authentication Security Controls', () => {
       expect(changePasswordResponse.body.errors).toBeDefined();
     });
 
-    test('should invalidate sessions on security events', async () => {
+    test('should invalidate sessions on security events (CHECKLIST 2.1.2)', async () => {
       const user = await createTestUser({
         username: 'sessionuser',
         email: 'session@test.com'
@@ -221,8 +242,8 @@ describe('Authentication Security Controls', () => {
     });
   });
 
-  describe('2.1.3 Only cryptographically strong hashed passwords stored', () => {
-    test('should store passwords using bcrypt with sufficient rounds', async () => {
+  describe('2.1.3 Only cryptographically strong hashed passwords stored (CHECKLIST 2.1.3)', () => {
+    test('should store passwords using bcrypt with sufficient rounds (CHECKLIST 2.1.3)', async () => {
       const userData = getValidRegistrationData();
       const plainTextPassword = userData.password;
 
@@ -248,16 +269,16 @@ describe('Authentication Security Controls', () => {
       expect(isValid).toBe(true);
     });
 
-    test('should enforce password complexity requirements', async () => {
+    test('should enforce password complexity requirements (CHECKLIST 2.1.5)', async () => {
       const weakPasswords = [
-        'short',                    // Too short
-        'onlylowercase123!',        // No uppercase
-        'ONLYUPPERCASE123!',        // No lowercase
-        'NoNumbers!',               // No numbers
-        'NoSpecialChars123',        // No special characters
-        'password123!',             // Common password
-        'Password123456!',          // Sequential characters
-        '123456789!A',              // Sequential numbers
+        'short',                    // Too short (CHECKLIST 2.1.6 - Password length)
+        'onlylowercase123!',        // No uppercase (CHECKLIST 2.1.5 - Password complexity)
+        'ONLYUPPERCASE123!',        // No lowercase (CHECKLIST 2.1.5 - Password complexity)
+        'NoNumbers!',               // No numbers (CHECKLIST 2.1.5 - Password complexity)
+        'NoSpecialChars123',        // No special characters (CHECKLIST 2.1.5 - Password complexity)
+        'password123!',             // Common password (CHECKLIST 2.1.5 - Password complexity)
+        'Password123456!',          // Sequential characters (CHECKLIST 2.1.5 - Password complexity)
+        '123456789!A',              // Sequential numbers (CHECKLIST 2.1.5 - Password complexity)
       ];
 
       for (const password of weakPasswords) {
@@ -275,7 +296,7 @@ describe('Authentication Security Controls', () => {
       }
     });
 
-    test('should enforce password history', async () => {
+    test('should enforce password history (CHECKLIST 2.1.10)', async () => {
       const user = await createTestUser({
         username: 'historyuser',
         email: 'history@test.com',
@@ -312,7 +333,7 @@ describe('Authentication Security Controls', () => {
       expect(response.body.message).toMatch(/different|same/i);
     });
 
-    test('should never store or log passwords in plaintext', async () => {
+    test('should never store or log passwords in plaintext (CHECKLIST 2.1.3)', async () => {
       const userData = getValidRegistrationData();
       const plainTextPassword = userData.password;
 
@@ -332,8 +353,8 @@ describe('Authentication Security Controls', () => {
     });
   });
 
-  describe('2.1.4 Generic authentication failure responses', () => {
-    test('should return generic error for various authentication failures', async () => {
+  describe('2.1.4 Generic authentication failure responses (CHECKLIST 2.1.4)', () => {
+    test('should return generic error for various authentication failures (CHECKLIST 2.1.4)', async () => {
       const testCases = [
         {
           username: 'nonexistent@test.com',
@@ -372,7 +393,7 @@ describe('Authentication Security Controls', () => {
       }
     });
 
-    test('should not reveal sensitive information in error messages', async () => {
+    test('should not reveal sensitive information in error messages (CHECKLIST 2.1.4)', async () => {
       // Test registration with existing email
       const user = await createTestUser({
         username: 'existing',
@@ -394,7 +415,7 @@ describe('Authentication Security Controls', () => {
       expect(response.body.message).not.toContain('username already exists');
     });
 
-    test('should provide consistent response times for authentication failures', async () => {
+    test('should provide consistent response times for authentication failures (CHECKLIST 2.1.4)', async () => {
       const user = await createTestUser({
         username: 'timinguser',
         email: 'timing@test.com',
@@ -426,7 +447,7 @@ describe('Authentication Security Controls', () => {
       expect(timeDifference).toBeLessThan(300);
     });
 
-    test('should not expose system information in error responses', async () => {
+    test('should not expose system information in error responses (CHECKLIST 2.1.4)', async () => {
       // Test with missing required fields
       const response = await request(app)
         .post('/api/auth/login')
@@ -440,8 +461,8 @@ describe('Authentication Security Controls', () => {
     });
   });
 
-  describe('Additional Security Controls', () => {
-    test('should log all authentication events for audit trail', async () => {
+  describe('Additional Security Controls (Various CHECKLIST items)', () => {
+    test('should log all authentication events for audit trail (CHECKLIST 2.1.12)', async () => {
       const user = await createTestUser({
         username: 'audituser',
         email: 'audit@test.com',
@@ -484,7 +505,7 @@ describe('Authentication Security Controls', () => {
       expect(failedLog.timestamp).toBeDefined();
     });
 
-    test('should enforce password minimum age', async () => {
+    test('should enforce password minimum age (CHECKLIST 2.1.11)', async () => {
       const user = await createTestUser({
         username: 'ageuser',
         email: 'age@test.com',

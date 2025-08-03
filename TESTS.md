@@ -49,20 +49,20 @@ tests/
 ### Phase 2: Security Features Integration Tests
 **Goal**: Validate all CHECKLIST.md security requirements
 
-#### 2.1 Authentication Security (tests/integration/03-security-features/auth-security.test.js)
+#### 2.1 Authentication Security (tests/integration/03-security-features/authentication-security.test.js)
 Based on CHECKLIST.md sections 2.1.x:
 
-- [ ] **2.1.1** Require authentication for all protected pages/resources *(CHECKLIST 2.1.1)*
-- [ ] **2.1.2** Authentication controls fail securely *(CHECKLIST 2.1.2)*
-- [ ] **2.1.3** Only cryptographically strong hashed passwords stored *(CHECKLIST 2.1.3)*
-- [ ] **2.1.4** Generic authentication failure responses *(CHECKLIST 2.1.4)*
-- [ ] **2.1.5** Password complexity requirements enforcement *(CHECKLIST 2.1.5)*
-- [ ] **2.1.6** Password length requirements enforcement *(CHECKLIST 2.1.6)*
-- [ ] **2.1.8** Account lockout after failed attempts *(CHECKLIST 2.1.8)*
-- [ ] **2.1.10** Password re-use prevention *(CHECKLIST 2.1.10)*
-- [ ] **2.1.11** Password age enforcement (1 day minimum) *(CHECKLIST 2.1.11)*
-- [ ] **2.1.12** Last login attempt reporting *(CHECKLIST 2.1.12)*
-- [ ] **2.1.13** Re-authentication for critical operations *(CHECKLIST 2.1.13)*
+- [x] **2.1.1** Require authentication for all protected pages/resources *(CHECKLIST 2.1.1)*
+- [x] **2.1.2** Authentication controls fail securely *(CHECKLIST 2.1.2)*
+- [x] **2.1.3** Only cryptographically strong hashed passwords stored *(CHECKLIST 2.1.3)*
+- [x] **2.1.4** Generic authentication failure responses *(CHECKLIST 2.1.4)*
+- [x] **2.1.5** Password complexity requirements enforcement *(CHECKLIST 2.1.5)*
+- [x] **2.1.6** Password length requirements enforcement *(CHECKLIST 2.1.6)*
+- [x] **2.1.8** Account lockout after failed attempts *(CHECKLIST 2.1.8)*
+- [x] **2.1.10** Password re-use prevention *(CHECKLIST 2.1.10)*
+- [x] **2.1.11** Password age enforcement (1 day minimum) *(CHECKLIST 2.1.11)*
+- [x] **2.1.12** Last login attempt reporting *(CHECKLIST 2.1.12)*
+- [x] **2.1.13** Re-authentication for critical operations *(CHECKLIST 2.1.13)*
 
 #### 2.2 Authorization/Access Control (tests/integration/03-security-features/authorization.test.js)
 Based on CHECKLIST.md sections 2.2.x:
