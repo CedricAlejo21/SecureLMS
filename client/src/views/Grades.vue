@@ -289,12 +289,7 @@ const fetchGrades = async () => {
   try {
     loading.value = true
     
-    console.log('=== GRADES FETCH DEBUG ===');
-    console.log('User:', authStore.user);
-    console.log('User role:', authStore.user?.role);
-    
     const userId = authStore.user?.userId || authStore.user?.id || authStore.user?._id;
-    console.log('Resolved user ID:', userId);
     
     if (isStudent.value) {
       // Students fetch their own grades
@@ -304,7 +299,6 @@ const fetchGrades = async () => {
       
       if (response.ok) {
         grades.value = await response.json()
-        console.log('Student grades fetched:', grades.value.length);
       } else {
         const errorData = await response.json();
         console.error('Error fetching student grades:', errorData);
@@ -314,8 +308,6 @@ const fetchGrades = async () => {
       // Instructors/admins fetch grades for their courses
       const allGrades = []
       
-      console.log('Fetching grades for courses:', userCourses.value.length);
-      
       for (const course of userCourses.value) {
         const response = await fetch(`/api/grades/course/${course._id}`, {
           headers: { 'Authorization': `Bearer ${authStore.token}` }
@@ -323,7 +315,6 @@ const fetchGrades = async () => {
         
         if (response.ok) {
           const courseGrades = await response.json()
-          console.log(`Course ${course.title} grades:`, courseGrades.length);
           allGrades.push(...courseGrades)
         } else {
           console.error(`Error fetching grades for course ${course.title}`);
@@ -331,7 +322,6 @@ const fetchGrades = async () => {
       }
       
       grades.value = allGrades
-      console.log('Total instructor grades fetched:', grades.value.length);
     }
   } catch (error) {
     console.error('Error in fetchGrades:', error);
@@ -359,7 +349,7 @@ const loadCourseData = async () => {
   if (!gradeForm.value.course) return
   
   try {
-    console.log('=== LOAD COURSE DATA DEBUG ===');
+
     console.log('Selected course ID:', gradeForm.value.course);
     
     // Fetch assignments for the selected course
@@ -441,7 +431,7 @@ const submitGrade = async () => {
 }
 
 const editGrade = (grade) => {
-  console.log('=== EDIT GRADE DEBUG ===');
+
   console.log('Grade to edit:', grade);
   
   editForm.value = {
@@ -464,7 +454,7 @@ const updateGrade = async () => {
   try {
     submitting.value = true
     
-    console.log('=== UPDATE GRADE DEBUG ===');
+
     console.log('Updating grade with data:', editForm.value);
     
     const updateData = {

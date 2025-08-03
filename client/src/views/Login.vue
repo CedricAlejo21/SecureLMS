@@ -45,6 +45,14 @@
           {{ authStore.error }}
         </div>
 
+        <div class="flex items-center justify-between">
+          <div class="text-sm">
+            <router-link to="/password-reset" class="font-medium text-blue-600 hover:text-blue-500">
+              Forgot your password?
+            </router-link>
+          </div>
+        </div>
+
         <div>
           <button
             type="submit"

@@ -101,6 +101,37 @@
           </form>
         </div>
 
+        <!-- Security Questions Setup -->
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Security Questions</h2>
+          <p class="text-sm text-gray-600 mb-4">
+            Set up security questions to enable password recovery. These questions will be used if you forget your password.
+          </p>
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 2.676-1.148 5.162-2.913 7.323-5.226.806-1.096 1.456-2.325 1.934-3.618a11.955 11.955 0 01.743-2.778z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-medium text-gray-900">Password Recovery Questions</p>
+                <p class="text-sm text-gray-500">Required for secure password reset</p>
+              </div>
+            </div>
+            <router-link 
+              to="/security-questions" 
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <svg class="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Setup Questions
+            </router-link>
+          </div>
+        </div>
+
         <!-- Security Information -->
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">Security Information</h2>

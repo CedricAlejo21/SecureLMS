@@ -185,11 +185,29 @@ const createDemoUsers = async () => {
 
       // Create new user
       const user = new User(accountData);
+      
+      // Add demo security questions for password reset testing
+      const demoSecurityQuestions = [
+        {
+          questionId: 'childhood_address_number',
+          answer: '123' // Demo answer: house number 123
+        },
+        {
+          questionId: 'first_phone_last_four',
+          answer: '5678' // Demo answer: last 4 digits
+        },
+        {
+          questionId: 'graduation_year',
+          answer: '2020' // Demo answer: graduation year
+        }
+      ];
+      
+      await user.setSecurityQuestions(demoSecurityQuestions);
       await user.save();
       
       createdUsers[accountData.username] = user; // Store by username instead of role
       
-      console.log(`✅ Created ${accountData.role}: ${accountData.username} (${accountData.email})`);
+      console.log(`✅ Created ${accountData.role}: ${accountData.username} (${accountData.email}) with security questions`);
       
       // Log user creation
       await AuditLog.log({
@@ -201,7 +219,8 @@ const createDemoUsers = async () => {
           username: user.username, 
           email: user.email, 
           role: user.role,
-          createdBy: 'setup-script'
+          createdBy: 'setup-script',
+          securityQuestionsSet: true
         },
         ipAddress: '127.0.0.1',
         userAgent: 'Setup Script'

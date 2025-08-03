@@ -57,11 +57,39 @@ const userSchema = new mongoose.Schema({
   },
   lockUntil: Date,
   lastLogin: Date,
-  passwordChangedAt: Date,
+  passwordChangedAt: {
+    type: Date,
+    default: Date.now
+  },
   passwordHistory: [{
     password: String,
     changedAt: Date
   }],
+  avatar: {
+    type: String,
+    default: null
+  },
+  // Security questions for password reset
+  securityQuestions: [{
+    questionId: {
+      type: String,
+      required: true
+    },
+    answer: {
+      type: String,
+      required: true,
+      select: false // Don't return answers in queries by default
+    },
+    _id: false
+  }],
+  passwordResetToken: {
+    type: String,
+    select: false
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -157,6 +185,39 @@ userSchema.methods.incLoginAttempts = function() {
   }
   
   return this.updateOne(updates);
+};
+
+// Method to verify security question answer
+userSchema.methods.verifySecurityAnswer = async function(questionId, candidateAnswer) {
+  const question = this.securityQuestions.find(q => q.questionId === questionId);
+  if (!question || !question.answer) {
+    return false;
+  }
+  
+  // Normalize answers for comparison (case-insensitive, trimmed)
+  const normalizedCandidate = candidateAnswer.toLowerCase().trim();
+  const normalizedStored = question.answer.toLowerCase().trim();
+  
+  return normalizedCandidate === normalizedStored;
+};
+
+// Method to set security questions with hashed answers
+userSchema.methods.setSecurityQuestions = async function(questions) {
+  this.securityQuestions = questions.map(q => ({
+    questionId: q.questionId,
+    answer: q.answer.toLowerCase().trim() // Store normalized answers
+  }));
+};
+
+// Method to generate password reset token
+userSchema.methods.createPasswordResetToken = function() {
+  const crypto = require('crypto');
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  
+  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  
+  return resetToken;
 };
 
 // Static method to find user by credentials

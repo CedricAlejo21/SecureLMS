@@ -1,11 +1,19 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const AuditLog = require('../models/AuditLog');
 const { auth, reAuth } = require('../middleware/auth');
 const roleAuth = require('../middleware/roleAuth');
+const { 
+  securityQuestions, 
+  getRandomQuestions, 
+  getQuestionById, 
+  validateAnswer,
+  securityGuidelines 
+} = require('../config/securityQuestions');
 
 const router = express.Router();
 
@@ -377,6 +385,313 @@ router.post('/change-password', [
   } catch (error) {
     console.error('Change password error:', error);
     res.status(500).json({ message: 'Server error during password change' });
+  }
+});
+
+// Get available security questions
+router.get('/security-questions', (req, res) => {
+  try {
+    // Return questions without answers for security
+    const questions = securityQuestions.map(q => ({
+      id: q.id,
+      question: q.question,
+      category: q.category,
+      guidance: q.guidance
+    }));
+    
+    res.json({
+      questions,
+      guidelines: securityGuidelines
+    });
+  } catch (error) {
+    console.error('Get security questions error:', error);
+    res.status(500).json({ message: 'Server error retrieving security questions' });
+  }
+});
+
+// Set security questions (for new users or updates)
+router.post('/security-questions', [
+  auth,
+  body('questions')
+    .isArray({ min: 3, max: 3 })
+    .withMessage('Exactly 3 security questions are required'),
+  body('questions.*.questionId')
+    .notEmpty()
+    .withMessage('Question ID is required'),
+  body('questions.*.answer')
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Answer must be between 1-100 characters')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { questions } = req.body;
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Validate each question and answer
+    for (const q of questions) {
+      const questionConfig = getQuestionById(q.questionId);
+      if (!questionConfig) {
+        return res.status(400).json({ message: `Invalid question ID: ${q.questionId}` });
+      }
+
+      const validation = validateAnswer(q.questionId, q.answer);
+      if (!validation.isValid) {
+        return res.status(400).json({ 
+          message: `Invalid answer for question "${questionConfig.question}": ${validation.error}` 
+        });
+      }
+    }
+
+    // Check for duplicate questions
+    const questionIds = questions.map(q => q.questionId);
+    if (new Set(questionIds).size !== questionIds.length) {
+      return res.status(400).json({ message: 'Duplicate questions are not allowed' });
+    }
+
+    // Set security questions
+    await user.setSecurityQuestions(questions);
+    await user.save();
+
+    // Log security questions setup
+    await AuditLog.log({
+      user: user._id,
+      action: 'SECURITY_QUESTIONS_SET',
+      resource: 'User',
+      resourceId: user._id,
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+
+    res.json({ message: 'Security questions set successfully' });
+  } catch (error) {
+    console.error('Set security questions error:', error);
+    res.status(500).json({ message: 'Server error setting security questions' });
+  }
+});
+
+// Initiate password reset - verify user and return their security questions
+router.post('/password-reset/initiate', [
+  body('identifier')
+    .notEmpty()
+    .withMessage('Email or username is required')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { identifier } = req.body;
+    
+    // Find user by email or username
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+      isActive: true
+    }).select('+securityQuestions +securityQuestions.answer');
+
+    // Always return success to prevent user enumeration
+    if (!user || !user.securityQuestions || user.securityQuestions.length === 0) {
+      return res.json({ 
+        message: 'If the account exists and has security questions set up, they will be displayed.',
+        hasQuestions: false
+      });
+    }
+
+    // Return user's security questions (without answers)
+    const userQuestions = user.securityQuestions.map(sq => {
+      const questionConfig = getQuestionById(sq.questionId);
+      return {
+        questionId: sq.questionId,
+        question: questionConfig ? questionConfig.question : 'Question not found',
+        guidance: questionConfig ? questionConfig.guidance : ''
+      };
+    });
+
+    // Log password reset initiation
+    await AuditLog.log({
+      user: user._id,
+      action: 'PASSWORD_RESET_INITIATED',
+      resource: 'User',
+      resourceId: user._id,
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+
+    res.json({
+      message: 'Security questions retrieved successfully',
+      hasQuestions: true,
+      questions: userQuestions,
+      userId: user._id // Needed for the next step
+    });
+  } catch (error) {
+    console.error('Password reset initiate error:', error);
+    res.status(500).json({ message: 'Server error during password reset initiation' });
+  }
+});
+
+// Verify security questions and generate reset token
+router.post('/password-reset/verify', [
+  body('userId')
+    .isMongoId()
+    .withMessage('Valid user ID is required'),
+  body('answers')
+    .isArray({ min: 1 })
+    .withMessage('Security question answers are required'),
+  body('answers.*.questionId')
+    .notEmpty()
+    .withMessage('Question ID is required'),
+  body('answers.*.answer')
+    .notEmpty()
+    .withMessage('Answer is required')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { userId, answers } = req.body;
+    
+    const user = await User.findById(userId).select('+securityQuestions +securityQuestions.answer');
+    if (!user || !user.isActive) {
+      return res.status(400).json({ message: 'Invalid request' });
+    }
+
+    // Debug logging
+    // Verify all security question answers
+    let correctAnswers = 0;
+    for (const answer of answers) {
+      const isCorrect = await user.verifySecurityAnswer(answer.questionId, answer.answer);
+      if (isCorrect) {
+        correctAnswers++;
+      }
+    }
+
+    // Require all answers to be correct
+    if (correctAnswers !== user.securityQuestions.length || correctAnswers !== answers.length) {
+      // Log failed attempt
+      await AuditLog.log({
+        user: user._id,
+        action: 'PASSWORD_RESET_FAILED',
+        resource: 'User',
+        resourceId: user._id,
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        details: 'Incorrect security question answers'
+      });
+
+      return res.status(400).json({ message: 'Security question answers are incorrect' });
+    }
+
+    // Generate password reset token
+    const resetToken = user.createPasswordResetToken();
+    await user.save();
+
+    // Log successful verification
+    await AuditLog.log({
+      user: user._id,
+      action: 'PASSWORD_RESET_VERIFIED',
+      resource: 'User',
+      resourceId: user._id,
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+
+    res.json({
+      message: 'Security questions verified successfully',
+      resetToken,
+      expiresIn: '10 minutes'
+    });
+  } catch (error) {
+    console.error('Password reset verify error:', error);
+    res.status(500).json({ message: 'Server error during verification' });
+  }
+});
+
+// Complete password reset with new password
+router.post('/password-reset/complete', [
+  body('resetToken')
+    .notEmpty()
+    .withMessage('Reset token is required'),
+  body('newPassword')
+    .isLength({ min: 12, max: 128 })
+    .withMessage('Password must be between 12-128 characters')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, 'g')
+    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { resetToken, newPassword } = req.body;
+    
+    // Hash the token to compare with stored version
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+      isActive: true
+    }).select('+password +passwordHistory');
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired reset token' });
+    }
+
+    // Check if new password is same as current
+    const isSamePassword = await user.correctPassword(newPassword);
+    if (isSamePassword) {
+      return res.status(400).json({ message: 'New password must be different from current password' });
+    }
+
+    // Check password history
+    let isInHistory = false;
+    for (const oldPassword of user.passwordHistory) {
+      const matches = await bcrypt.compare(newPassword, oldPassword.password);
+      if (matches) {
+        isInHistory = true;
+        break;
+      }
+    }
+
+    if (isInHistory) {
+      return res.status(400).json({ message: 'New password cannot be the same as any of your last 5 passwords' });
+    }
+
+    // Update password and clear reset token
+    user.password = newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    user.failedLoginAttempts = 0;
+    user.accountLocked = false;
+    user.lockUntil = undefined;
+    
+    await user.save();
+
+    // Log successful password reset
+    await AuditLog.log({
+      user: user._id,
+      action: 'PASSWORD_RESET_COMPLETED',
+      resource: 'User',
+      resourceId: user._id,
+      ipAddress: req.ip,
+      userAgent: req.get('User-Agent')
+    });
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (error) {
+    console.error('Password reset complete error:', error);
+    res.status(500).json({ message: 'Server error during password reset' });
   }
 });
 

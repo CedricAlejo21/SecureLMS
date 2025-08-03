@@ -18,6 +18,8 @@ import Users from '../views/Users.vue'
 import AuditLogs from '../views/AuditLogs.vue'
 import Settings from '../views/Settings.vue'
 import NotFound from '../views/NotFound.vue'
+import SecurityQuestions from '../components/SecurityQuestions.vue'
+import PasswordReset from '../components/PasswordReset.vue'
 
 const routes = [
   {
@@ -37,6 +39,18 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: { requiresAuth: false, hideForAuth: true }
+  },
+  {
+    path: '/password-reset',
+    name: 'PasswordReset',
+    component: PasswordReset,
+    meta: { requiresAuth: false, hideForAuth: true }
+  },
+  {
+    path: '/security-questions',
+    name: 'SecurityQuestions',
+    component: SecurityQuestions,
+    meta: { requiresAuth: true }
   },
   {
     path: '/dashboard',
