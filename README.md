@@ -64,6 +64,10 @@ This Secure LMS is designed for educational institutions requiring robust securi
 
 ### Development Mode
 
+### Setup Demo Data
+```bash
+npm run setup-demo
+
 #### Option 1: Run Backend and Frontend Separately
 ```bash
 # Terminal 1 - Backend
@@ -91,15 +95,13 @@ npm run build
 npm start
 ```
 
-### Setup Demo Data
-```bash
-npm run setup-demo
+
 ```
 
 ### Access the Application
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000
-- **API Documentation**: http://localhost:5000/api
+- **Backend API**: http://localhost:3001
+- **API Documentation**: http://localhost:3001/api
 
 ## 👥 Demo Accounts
 
