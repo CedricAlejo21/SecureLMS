@@ -203,12 +203,15 @@ router.put('/change-password', auth, [
       return res.status(400).json({ message: 'Current password is incorrect' });
     }
 
-    // Check if new password was used recently
+    // Check if new password is the same as current password
+    const isCurrentPassword = await bcrypt.compare(newPassword, user.password);
+    
+    // Check if new password was used recently in history
     const isPasswordReused = user.passwordHistory.some(
       historyEntry => bcrypt.compareSync(newPassword, historyEntry.password)
     );
     
-    if (isPasswordReused) {
+    if (isCurrentPassword || isPasswordReused) {
       await AuditLog.log({
         user: req.user.userId,
         action: 'PASSWORD_CHANGE_FAILED',

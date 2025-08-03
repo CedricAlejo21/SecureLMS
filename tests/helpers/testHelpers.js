@@ -107,7 +107,25 @@ const assertAuditLog = async (action, userId = null, details = {}) => {
   expect(log).toBeTruthy();
   if (userId) expect(log.user?.toString()).toBe(userId.toString());
   if (Object.keys(details).length > 0) {
-    expect(log.details).toMatchObject(details);
+    // Helper function to normalize ObjectIds to strings
+    const normalizeObjectIds = (obj) => {
+      const normalized = { ...obj };
+      Object.keys(normalized).forEach(key => {
+        if (normalized[key] && typeof normalized[key].toString === 'function') {
+          // Check if it's an ObjectId by looking for the mongoose ObjectId symbol
+          if (normalized[key].constructor && normalized[key].constructor.name === 'ObjectId') {
+            normalized[key] = normalized[key].toString();
+          }
+        }
+      });
+      return normalized;
+    };
+    
+    // Convert ObjectIds to strings for comparison in both actual and expected
+    const normalizedLogDetails = normalizeObjectIds(log.details);
+    const normalizedExpectedDetails = normalizeObjectIds(details);
+    
+    expect(normalizedLogDetails).toMatchObject(normalizedExpectedDetails);
   }
   return log;
 };

@@ -41,10 +41,10 @@ tests/
 - [x] **1.2.1** Course creation by instructor
 - [x] **1.2.2** Course listing and retrieval
 - [x] **1.2.3** Student enrollment in courses
-- [ ] **1.2.4** Assignment creation by instructor
-- [ ] **1.2.5** Assignment submission by student
-- [ ] **1.2.6** Grade assignment by instructor
-- [ ] **1.2.7** User profile management
+- [x] **1.2.4** Assignment creation by instructor
+- [x] **1.2.5** Assignment submission by student
+- [x] **1.2.6** Grade assignment by instructor
+- [x] **1.2.7** User profile management
 
 ### Phase 2: Security Features Integration Tests
 **Goal**: Validate all CHECKLIST.md security requirements

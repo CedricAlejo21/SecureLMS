@@ -196,9 +196,9 @@ router.put('/:assignmentId/:studentId/grade', auth, authorize('instructor', 'adm
     }
 
     // Validate grade is within assignment max points
-    if (grade < 0 || grade > assignment.maxPoints) {
+    if (grade < 0 || grade > assignment.maxScore) {
       return res.status(400).json({ 
-        message: `Grade must be between 0 and ${assignment.maxPoints}` 
+        message: `Grade must be between 0 and ${assignment.maxScore}` 
       });
     }
 
