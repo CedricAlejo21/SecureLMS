@@ -130,10 +130,12 @@ router.post('/', [
   authorize('instructor', 'admin'),
   body('title')
     .isLength({ min: 3, max: 100 })
-    .withMessage('Course title must be 3-100 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&]+$/)
+    .withMessage('Course title must be 3-100 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('description')
     .isLength({ min: 10, max: 500 })
-    .withMessage('Course description must be 10-500 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]+$/)
+    .withMessage('Course description must be 10-500 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('startDate')
     .isISO8601()
     .withMessage('Valid start date is required'),
@@ -232,11 +234,13 @@ router.put('/:id', [
   body('title')
     .optional()
     .isLength({ min: 3, max: 100 })
-    .withMessage('Course title must be 3-100 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&]+$/)
+    .withMessage('Course title must be 3-100 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('description')
     .optional()
     .isLength({ min: 10, max: 500 })
-    .withMessage('Course description must be 10-500 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]+$/)
+    .withMessage('Course description must be 10-500 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('startDate')
     .optional()
     .isISO8601()

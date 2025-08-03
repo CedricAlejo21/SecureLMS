@@ -134,7 +134,8 @@ router.post('/', auth, authorize('instructor', 'admin'), [
   body('feedback')
     .optional()
     .isLength({ max: 1000 })
-    .withMessage('Feedback must be less than 1000 characters')
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]*$/)
+    .withMessage('Feedback must be less than 1000 characters and contain only letters, numbers, spaces, and basic punctuation')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);

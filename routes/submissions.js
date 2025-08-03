@@ -57,7 +57,8 @@ router.get('/:assignmentId/:studentId', auth, async (req, res) => {
 router.post('/:assignmentId/:studentId', auth, authorize('student'), [
   body('text')
     .isLength({ min: 1, max: 5000 })
-    .withMessage('Submission text is required and must be less than 5000 characters')
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]+$/)
+    .withMessage('Submission text is required, must be less than 5000 characters, and contain only letters, numbers, spaces, and basic punctuation')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -171,7 +172,8 @@ router.put('/:assignmentId/:studentId/grade', auth, authorize('instructor', 'adm
   body('feedback')
     .optional()
     .isLength({ max: 1000 })
-    .withMessage('Feedback must be less than 1000 characters')
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]*$/)
+    .withMessage('Feedback must be less than 1000 characters and contain only letters, numbers, spaces, and basic punctuation')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);

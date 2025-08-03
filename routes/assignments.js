@@ -209,10 +209,12 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/', auth, authorize('instructor', 'admin'), [
   body('title')
     .isLength({ min: 1, max: 200 })
-    .withMessage('Title is required and must be less than 200 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&]+$/)
+    .withMessage('Title is required, must be less than 200 characters, and contain only letters, numbers, spaces, and basic punctuation'),
   body('description')
     .isLength({ min: 1, max: 2000 })
-    .withMessage('Description is required and must be less than 2000 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]+$/)
+    .withMessage('Description is required, must be less than 2000 characters, and contain only letters, numbers, spaces, and basic punctuation'),
   body('course')
     .isMongoId()
     .withMessage('Valid course ID is required'),
@@ -287,11 +289,13 @@ router.put('/:id', auth, authorize('instructor', 'admin'), [
   body('title')
     .optional()
     .isLength({ min: 1, max: 200 })
-    .withMessage('Title must be less than 200 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&]+$/)
+    .withMessage('Title must be less than 200 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('description')
     .optional()
     .isLength({ min: 1, max: 2000 })
-    .withMessage('Description must be less than 2000 characters'),
+    .matches(/^[a-zA-Z0-9\s\-\.,!()&\n\r]+$/)
+    .withMessage('Description must be less than 2000 characters and contain only letters, numbers, spaces, and basic punctuation'),
   body('dueDate')
     .optional()
     .isISO8601()

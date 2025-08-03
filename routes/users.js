@@ -110,10 +110,12 @@ router.get('/students/stats', auth, async (req, res) => {
 router.put('/profile', auth, [
   body('firstName')
     .isLength({ min: 1, max: 50 })
-    .withMessage('First name is required and must be less than 50 characters'),
+    .matches(/^[a-zA-Z\s'-]+$/)
+    .withMessage('First name is required, must be less than 50 characters, and contain only letters, spaces, hyphens, and apostrophes'),
   body('lastName')
     .isLength({ min: 1, max: 50 })
-    .withMessage('Last name is required and must be less than 50 characters'),
+    .matches(/^[a-zA-Z\s'-]+$/)
+    .withMessage('Last name is required, must be less than 50 characters, and contain only letters, spaces, hyphens, and apostrophes'),
   body('email')
     .isEmail()
     .normalizeEmail()
